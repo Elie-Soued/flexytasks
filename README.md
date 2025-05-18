@@ -1,59 +1,51 @@
-# Flexytasks
+### Flexytasks
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.0.2.
+**Flexytasks** is the frontend of a full-stack Todo application.
 
-## Development server
+##### Overview
 
-To start a local development server, run:
+This project is built with **Angular** for the frontend and communicates with a **Node.js + Express** backend.  
+It is deployed on **Hetzner** and uses **GitHub Actions** for continuous integration.
+
+##### Development
+
+To start the development server:
 
 ```bash
 ng serve
+
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Open your browser at http://localhost:4200/ to see the app. The application will automatically reload when source files are modified.  
 
-## Code scaffolding
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
+##### Build
 
 ```bash
 ng build
+
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
 
-## Running unit tests
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+##### Testing
+Unit Tests
+Run unit tests using Karma:
 
 ```bash
 ng test
+
 ```
 
-## Running end-to-end tests
+##### Continuous Integration
+This project is integrated with GitHub Actions for CI.  
+Whenever changes are pushed, automated workflows are triggered to build and test the application.  
 
-For end-to-end (e2e) testing, run:
+##### Deployment
+The application is deployed on a Hetzner server.
+Build artifacts from the CI pipeline can be deployed automatically or manually to the production environment.
 
-```bash
-ng e2e
-```
+##### Backend
+The backend is a separate service built using Node.js and Express, responsible for handling API requests and persisting todo items.
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
 
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
