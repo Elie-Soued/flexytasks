@@ -1,0 +1,57 @@
+<form id="loginForm" #loginForm="ngForm" class="d-flex justify-content-center">
+  <div class="input-group mb-3 w-75">
+    <input
+      type="text"
+      class="form-control"
+      name="newTask"
+      id="newTask"
+      placeholder="Add a task to your todolist :)"
+      [(ngModel)]="newTask"
+      #newTaskInput="ngModel"
+    />
+    <div class="input-group-append">
+      <span
+        class="input-group-text"
+        id="basic-addon2"
+        style="border-radius: 0px; padding: 0px"
+      >
+        <button
+          class="btn"
+          id="addTaskButton"
+          style="border-radius: 0px"
+          (click)="addTask()"
+        >
+          <fa-icon [icon]="add"></fa-icon>
+        </button>
+        <button
+          class="btn"
+          style="border-radius: 0px; border-left: 1px solid lightgray"
+          tooltip="deleteAll"
+          id="deleteAll"
+          (click)="deleteAll()"
+        >
+          <fa-icon [icon]="deleteAllIcon"></fa-icon>
+        </button>
+      </span>
+    </div>
+  </div>
+</form>
+
+@for(task of tasks; track task.id){
+<div class="d-flex justify-content-center">
+  <div class="input-group mb-3 w-75">
+    <div class="w-100">
+      <app-task
+        [task]="task"
+        [limit]="limit"
+        (removeTask)="updateTask($event)"
+        (editTask)="updateTask($event)"
+      ></app-task>
+    </div>
+  </div>
+</div>
+
+} @if(totalCount > limit){
+
+<app-pagination></app-pagination>
+}

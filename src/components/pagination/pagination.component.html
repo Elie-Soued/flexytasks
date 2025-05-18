@@ -1,0 +1,26 @@
+<nav class="d-flex justify-content-center" aria-label="Page navigation example">
+  <ul class="pagination">
+    <li class="page-item">
+      <a
+        class="page-link"
+        style="cursor: pointer"
+        id="previous"
+        [class.disabled]="offset === 0"
+        (click)="previousPage()"
+        >Previous</a
+      >
+    </li>
+
+    <li class="page-item">
+      <a
+        class="page-link"
+        style="cursor: pointer"
+        id="next"
+        [class.disabled]="offset + limit >= totalCount"
+        (click)="nextPage()"
+      >
+        Next
+      </a>
+    </li>
+  </ul>
+</nav>

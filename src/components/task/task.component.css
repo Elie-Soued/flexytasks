@@ -1,0 +1,38 @@
+.task{
+  border: none;
+  border-radius: 0px;
+
+}
+
+.checked{
+  text-decoration: line-through;
+}
+
+
+input[disabled]{
+  pointer-events:none;
+
+}
+
+
+
+.iconBackground{
+background-color: white;
+}
+
+.iconColor{
+  color:black
+}
+
+
+
+@media (max-width: 992px) { /* lg and up */
+  .iconBackground {
+    background-color: transparent;
+
+  }
+
+  .iconColor{
+  color:white
+}
+}

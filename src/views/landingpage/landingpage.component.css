@@ -1,0 +1,33 @@
+.bg-landingpage {
+  background: url('../../assets/landingpage.jpg') no-repeat center center;
+  background-size: cover;
+  min-height: 90vh;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+
+/* Only apply bg-landingpage on small screens */
+.bg-landingpage-sm {
+  background: url('../../assets/landingpage.jpg') no-repeat center center;
+  background-size: cover;
+  min-height: 90vh;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+    height: 100vh;
+}
+
+  .landingpageHeight{
+  height: 100%;
+}
+
+
+@media (min-width: 992px) { /* lg and up */
+  .bg-landingpage-sm {
+    background: none !important;
+  }
+
+  .landingpageHeight{
+  height: auto;
+}
+}

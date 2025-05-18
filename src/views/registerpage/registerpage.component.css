@@ -1,0 +1,36 @@
+.bg-registerpage{
+  background: url('../../assets/registerpage.jpg') no-repeat center center;
+  background-size: cover;
+  min-height: 90vh;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+
+.bg-registerpage-sm{
+  background: url('../../assets/registerpage.jpg') no-repeat center center;
+  background-size: cover;
+  min-height: 90vh;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+
+
+}
+
+  .registerPageHeight{
+  height: 100vh;
+
+}
+
+
+@media (min-width: 992px) { /* lg and up */
+  .bg-registerpage-sm {
+    background: none !important;
+
+  }
+
+  .registerPageHeight{
+  height: auto;
+}
+
+}

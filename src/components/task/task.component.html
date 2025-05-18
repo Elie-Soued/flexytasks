@@ -1,0 +1,113 @@
+<div class="input-group mb-3 w-100 d-flex flex-column flex-md-row">
+  <div class="col" id="inputContainer" (click)="enableTask()">
+    <input
+      type="text"
+      id="task"
+      class="form-control task"
+      [style.background-color]="disabled ? 'whitesmoke' : ''"
+      [style.text-decoration]="checked ? 'line-through' : ''"
+      value="{{ task.content }}"
+      [disabled]="disabled"
+      [(ngModel)]="updatedTask"
+      #updatedTaskInput="ngModel"
+      (keyup.enter)="updateTask()"
+    />
+  </div>
+
+  <div class="input-group-append d-flex column">
+    @if(disabled){
+
+    <span
+      class="input-group-text"
+      id="basic-addon2"
+      style="
+        border-radius: 0px;
+        padding: 0px;
+        margin: 0px;
+        border: none;
+        background-color: transparent;
+      "
+    >
+      <button
+        class="btn"
+        id="enableButton"
+        style="border-radius: 0px"
+        (click)="enableTask()"
+      >
+        <fa-icon class="iconColor" [icon]="edit"></fa-icon>
+      </button>
+    </span>
+    <span
+      class="input-group-text iconBackground"
+      id="basic-addon2"
+      style="border-radius: 0px; padding: 0px; margin: 0px; border: none"
+    >
+      <button
+        class="btn"
+        id="strikethroughButton"
+        style="border-radius: 0px; background-color: transparent"
+        (click)="checked = !checked; checkTask(checked)"
+      >
+        <fa-icon class="iconColor" [icon]="strikethrough"></fa-icon>
+      </button>
+    </span>
+    <span
+      class="input-group-text"
+      id="basic-addon2"
+      style="
+        border-radius: 0px;
+        padding: 0px;
+        margin: 0px;
+        border: none;
+        background-color: transparent;
+      "
+    >
+      <button
+        class="btn"
+        id="deleteButton"
+        style="border-radius: 0px; background-color: transparent"
+        (click)="deleteTask()"
+      >
+        <fa-icon class="iconColor" [icon]="delete"></fa-icon>
+      </button>
+    </span>
+
+    } @else{
+    <span
+      class="input-group-text"
+      id="basic-addon2"
+      style="
+        border-radius: 0px;
+        padding: 0px;
+        margin: 0px;
+        border: none;
+        background-color: transparent;
+      "
+    >
+      <button
+        class="btn"
+        id="updateButton"
+        style="border-radius: 0px"
+        (click)="updateTask()"
+      >
+        <fa-icon class="iconColor" [icon]="check"></fa-icon>
+      </button>
+    </span>
+    <span
+      class="input-group-text iconBackground"
+      id="basic-addon2"
+      style="border-radius: 0px; padding: 0px; margin: 0px; border: none"
+    >
+      <button
+        class="btn"
+        id="disableButton"
+        style="border-radius: 0px"
+        (click)="disableTask()"
+      >
+        <fa-icon class="iconColor" [icon]="undo"></fa-icon>
+      </button>
+    </span>
+
+    }
+  </div>
+</div>
