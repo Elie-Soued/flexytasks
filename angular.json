@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "senior-dev-app": {
+    "flexytasks": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/senior-dev-app",
+            "outputPath": "dist/flexytasks",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -37,7 +37,7 @@
           },
           "configurations": {
             "production": {
-              "outputPath": "/var/www/senior-dev-app",
+              "outputPath": "/var/www/flexytasks",
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -59,7 +59,7 @@
               "outputHashing": "all"
             },
             "github-actions": {
-              "outputPath": "dist/senior-dev-app"
+              "outputPath": "dist/flexytasks"
             },
             "development": {
               "optimization": false,
@@ -73,10 +73,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "senior-dev-app:build:production"
+              "buildTarget": "flexytasks:build:production"
             },
             "development": {
-              "buildTarget": "senior-dev-app:build:development"
+              "buildTarget": "flexytasks:build:development"
             }
           },
           "defaultConfiguration": "development"
