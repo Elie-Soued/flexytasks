@@ -17,8 +17,17 @@
 
 
 
+.dashboardHeight{
+  height: 100vh;
+}
+
+
 @media (min-width: 992px) { /* lg and up */
   .bg-dashboardpage-sm {
     background: none !important;
   }
+
+  .dashboardHeight{
+  height: auto;
+}
 }
