@@ -5,6 +5,10 @@ import { TaskcontainerComponent } from './taskcontainer.component';
 import { TaskComponent } from '../task/task.component';
 import { routes } from '../../app/app.routes';
 import { By } from '@angular/platform-browser';
+import { provideStore } from '@ngrx/store';
+import { tokenReducer } from '../../store/token.reducer';
+import { TokenEffects } from '../../store/token.effects';
+import { provideEffects } from '@ngrx/effects';
 
 describe('TaskcontainerComponent', () => {
   let component: TaskcontainerComponent;
@@ -28,7 +32,12 @@ describe('TaskcontainerComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [TaskcontainerComponent, TaskComponent],
-      providers: [provideHttpClient(withFetch()), provideRouter(routes)],
+      providers: [
+        provideHttpClient(withFetch()),
+        provideRouter(routes),
+        provideStore({ token: tokenReducer }),
+        provideEffects([TokenEffects]),
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(TaskcontainerComponent);

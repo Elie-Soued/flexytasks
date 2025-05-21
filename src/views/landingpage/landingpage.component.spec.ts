@@ -5,6 +5,10 @@ import { LandingpageComponent } from './landingpage.component';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import { provideRouter } from '@angular/router';
 import { routes } from '../../app/app.routes';
+import { provideStore } from '@ngrx/store';
+import { tokenReducer } from '../../store/token.reducer';
+import { provideEffects } from '@ngrx/effects';
+import { TokenEffects } from '../../store/token.effects';
 
 describe('LandingpageComponent', () => {
   let component: LandingpageComponent;
@@ -13,7 +17,12 @@ describe('LandingpageComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [FormsModule, LandingpageComponent],
-      providers: [provideHttpClient(withFetch()), provideRouter(routes)],
+      providers: [
+        provideHttpClient(withFetch()),
+        provideRouter(routes),
+        provideStore({ token: tokenReducer }),
+        provideEffects([TokenEffects]),
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(LandingpageComponent);

@@ -8,6 +8,10 @@ import { provideRouter } from '@angular/router';
 import { DashboardComponent } from './dashboard.component';
 import { routes } from '../../app/app.routes';
 import { By } from '@angular/platform-browser';
+import { tokenReducer } from '../../store/token.reducer';
+import { TokenEffects } from '../../store/token.effects';
+import { provideStore } from '@ngrx/store';
+import { provideEffects } from '@ngrx/effects';
 
 describe('DashboardComponent', () => {
   let component: DashboardComponent;
@@ -42,6 +46,8 @@ describe('DashboardComponent', () => {
         provideHttpClient(withFetch()),
         provideRouter(routes),
         provideHttpClientTesting(),
+        provideStore({ token: tokenReducer }),
+        provideEffects([TokenEffects]),
       ],
     }).compileComponents();
 
@@ -83,7 +89,7 @@ describe('DashboardComponent', () => {
     logoutButton.click();
 
     expect(logoutFunction).toHaveBeenCalled();
-    expect(localStorage.getItem('accessToken')).toBeNull();
+    expect(localStorage.getItem('accessToken')).toEqual('');
   });
 
   it('Subscriptions are removed on ngOnDestroy in the DashboardView', () => {
