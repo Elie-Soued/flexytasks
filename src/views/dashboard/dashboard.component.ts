@@ -13,6 +13,7 @@ import {
 import { type task, type taskResponse } from '../../types/type';
 import { PaginationService } from '../../service/pagination.service';
 import { Subscription } from 'rxjs';
+import { TokenService } from '../../service/token.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -22,6 +23,7 @@ import { Subscription } from 'rxjs';
   styleUrl: './dashboard.component.css',
 })
 export class DashboardComponent {
+  token = '';
   tasks: task[] = [];
   logoutIcon = faRightFromBracket;
   deleteAll = faTrashAlt;
@@ -37,10 +39,11 @@ export class DashboardComponent {
 
   constructor(
     private router: Router,
+    private tokenService: TokenService,
     public paginationService: PaginationService
-  ) {}
-
-  token = localStorage.getItem('accessToken');
+  ) {
+    this.token = this.tokenService.getToken();
+  }
 
   ngOnInit(): void {
     this.getAllTasks();
@@ -69,7 +72,7 @@ export class DashboardComponent {
       .get(
         environment.URL,
         {
-          authorization: this.token!,
+          authorization: this.token,
         },
 
         params
@@ -87,7 +90,7 @@ export class DashboardComponent {
   }
 
   logout(): void {
-    localStorage.removeItem('accessToken');
+    this.tokenService.setToken('');
     this.router.navigate(['/']);
   }
 

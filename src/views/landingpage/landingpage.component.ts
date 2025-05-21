@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { environment } from '../../environments/environment';
 import { type loginResponse, loginPayload } from '../../types/type';
+import { TokenService } from '../../service/token.service';
 
 @Component({
   selector: 'app-landingpage',
@@ -18,7 +19,11 @@ export class LandingpageComponent {
   error: string | undefined = '';
   private URL_LOGIN = environment.URL_LOGIN;
 
-  constructor(private queryService: QueryService, private router: Router) {}
+  constructor(
+    private queryService: QueryService,
+    private router: Router,
+    private tokenService: TokenService
+  ) {}
 
   login(): void {
     this.queryService
@@ -31,7 +36,7 @@ export class LandingpageComponent {
           const { accessToken, message } = response;
           if (accessToken) {
             this.router.navigate(['/dashboard']);
-            localStorage.setItem('accessToken', accessToken);
+            this.tokenService.setToken(accessToken);
           } else {
             this.error = message;
           }

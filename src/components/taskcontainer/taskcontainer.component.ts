@@ -14,12 +14,15 @@ import {
   type taskResponse,
 } from '../../types/type';
 
+import { TokenService } from '../../service/token.service';
+
 @Component({
   selector: 'app-taskcontainer',
   imports: [TaskComponent, PaginationComponent, FormsModule, FontAwesomeModule],
   templateUrl: './taskcontainer.component.html',
 })
 export class TaskcontainerComponent {
+  token = '';
   newTask = '';
   add = faPlus;
   deleteAllIcon = faTrashAlt;
@@ -30,10 +33,11 @@ export class TaskcontainerComponent {
 
   constructor(
     private queryService: QueryService,
-    private paginationService: PaginationService
-  ) {}
-
-  token = localStorage.getItem('accessToken');
+    private paginationService: PaginationService,
+    private tokenService: TokenService
+  ) {
+    this.token = this.tokenService.getToken();
+  }
 
   private URL = environment.URL;
 
@@ -56,7 +60,7 @@ export class TaskcontainerComponent {
         },
 
         {
-          authorization: this.token!,
+          authorization: this.token,
         },
         params
       )
@@ -83,7 +87,7 @@ export class TaskcontainerComponent {
       .delete(
         `${environment.URL}`,
         {
-          authorization: this.token!,
+          authorization: this.token,
         },
 
         params

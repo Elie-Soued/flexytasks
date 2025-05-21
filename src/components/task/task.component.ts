@@ -20,6 +20,7 @@ import {
   faStrikethrough,
   faBroom,
 } from '@fortawesome/free-solid-svg-icons';
+import { TokenService } from '../../service/token.service';
 
 @Component({
   selector: 'app-task',
@@ -55,12 +56,15 @@ export class TaskComponent {
   offset = 0;
   totalCount = 0;
 
+  token = '';
+
   constructor(
     private queryService: QueryService,
-    private paginationService: PaginationService
-  ) {}
-
-  token = localStorage.getItem('accessToken');
+    private paginationService: PaginationService,
+    private tokenService: TokenService
+  ) {
+    this.token = this.tokenService.getToken();
+  }
 
   ngOnInit(): void {
     this.updatedTask = this.task.content;
@@ -84,7 +88,7 @@ export class TaskComponent {
       .delete(
         `${environment.URL}/${this.task.id}`,
         {
-          authorization: this.token!,
+          authorization: this.token,
         },
 
         params
@@ -119,7 +123,7 @@ export class TaskComponent {
         },
 
         {
-          authorization: this.token!,
+          authorization: this.token,
         },
         params
       )
@@ -147,7 +151,7 @@ export class TaskComponent {
         },
 
         {
-          authorization: this.token!,
+          authorization: this.token,
         },
         params
       )
