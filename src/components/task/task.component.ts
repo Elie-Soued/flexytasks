@@ -15,7 +15,7 @@ import { Subscription } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
 import { TokenService } from '../../service/token.service';
 
-import { type task, type taskResponse } from '../../types/type';
+import { type task, type taskResponse } from '../../type';
 
 import {
   faTrash,

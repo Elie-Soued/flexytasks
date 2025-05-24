@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { type taskResponse } from '../types/type';
+import { type taskResponse } from '../type';
 
 type authHeader = {
   authorization: string;

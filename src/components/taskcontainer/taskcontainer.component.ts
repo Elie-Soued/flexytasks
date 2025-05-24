@@ -8,7 +8,7 @@ import { QueryService } from '../../service/query.service';
 import { environment } from '../../environments/environment';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faPlus, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
-import { type task, type taskResponse } from '../../types/type';
+import { type task, type taskResponse } from '../../type';
 
 import { TokenService } from '../../service/token.service';
 
