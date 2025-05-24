@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { PaginationService } from '../../service/pagination.service';
 import { Subscription } from 'rxjs';
 
@@ -8,7 +8,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './pagination.component.html',
   providers: [],
 })
-export class PaginationComponent {
+export class PaginationComponent implements OnInit, OnDestroy {
   @Input() limit = 5;
   offset = 0;
   totalCount = 0;

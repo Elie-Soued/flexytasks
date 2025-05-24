@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpParams } from '@angular/common/http';
 import { TaskcontainerComponent } from '../../components/taskcontainer/taskcontainer.component';
@@ -22,7 +22,7 @@ import { TokenService } from '../../service/token.service';
   providers: [QueryService, Router, PaginationService],
   styleUrl: './dashboard.component.css',
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnInit, OnDestroy {
   token = '';
   tasks: task[] = [];
   logoutIcon = faRightFromBracket;

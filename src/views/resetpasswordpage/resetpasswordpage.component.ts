@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { QueryService } from '../../service/query.service';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -22,7 +22,7 @@ type updatePasswordResponse = {
   styleUrl: './resetpasswordpage.component.css',
   providers: [QueryService, Router],
 })
-export class ResetpasswordpageComponent {
+export class ResetpasswordpageComponent implements OnInit {
   token: string = '';
   password = '';
   confirmedpassword = '';

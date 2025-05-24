@@ -1,4 +1,11 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  OnInit,
+  OnDestroy,
+} from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { QueryService } from '../../service/query.service';
 import { PaginationService } from '../../service/pagination.service';
@@ -33,7 +40,7 @@ type checkedTask = {
   templateUrl: './task.component.html',
   styleUrl: './task.component.css',
 })
-export class TaskComponent {
+export class TaskComponent implements OnInit, OnDestroy {
   //Inputs and Outputs
   @Input() task!: task;
   @Input() limit!: number;
