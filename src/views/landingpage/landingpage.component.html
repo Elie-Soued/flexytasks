@@ -1,3 +1,9 @@
+@if(forgotPassword){
+
+<app-modal (closeDialog)="closeModal()"></app-modal>
+
+}
+
 <div
   class="p-0 p-lg-5"
   style="background-color: #eee; border: '4px solid white'"
@@ -39,9 +45,9 @@
               #passwordInput="ngModel"
             />
           </div>
-          <!-- Sign in + forgot password -->
+
           <div
-            class="d-flex flex-column justify-content-center text-center pt-1 mb-5 pb-1"
+            class="d-flex flex-column justify-content-center text-center pt-1 pb-1"
           >
             <div class="d-flex justify-content-center p-2">
               <button
@@ -53,19 +59,28 @@
                 Log in
               </button>
             </div>
-            <a class="text-muted" href="#!">Forgot password?</a>
-          </div>
-          <!-- Create account -->
-          <div class="d-flex align-items-center justify-content-center pb-4">
-            <p class="mb-0 me-2">Don't have an account?</p>
-
-            <a href="/register">
-              <button type="button" class="btn btn-outline-secondary">
-                Register
-              </button>
-            </a>
           </div>
         </form>
+        <div class="d-flex align-items-center justify-content-center pb-4">
+          <button
+            class="btn btn-light"
+            style="background-color: transparent; border: none"
+            (click)="showModal()"
+          >
+            Forgot password?
+          </button>
+        </div>
+
+        <!-- Create account -->
+        <div class="d-flex align-items-center justify-content-center pb-4">
+          <p class="mb-0 me-2" style="color: grey">Don't have an account?</p>
+
+          <a href="/register">
+            <button type="button" class="btn btn-outline-secondary">
+              Register
+            </button>
+          </a>
+        </div>
 
         <div
           [hidden]="!this.error"

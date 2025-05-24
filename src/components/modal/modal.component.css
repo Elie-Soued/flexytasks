@@ -1,0 +1,43 @@
+.backdrop {
+  background-color: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 1000;
+}
+
+
+
+dialog {
+  position: fixed;
+  width: 90%;
+  max-width: 30rem;
+  border-radius: 6px;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+  padding: 1rem;
+  border: none;
+  left: 50%;
+  right: 50%;
+  top: 30%;
+  bottom: 70%;
+  transform: translateX(-50%);
+  z-index: 1001; /* higher than backdrop */
+  background-color: white; /* ensures background is not transparent */
+}
+
+
+
+
+span{
+    font-family: 'FlatLion', sans-serif;
+    font-size: 80px;
+}
+
+
+p{
+    font-family: 'FlatLion', sans-serif;
+    font-size: 60px;
+}

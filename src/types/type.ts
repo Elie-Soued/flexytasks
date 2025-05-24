@@ -24,6 +24,27 @@ type addNewTaskPayload = {
   newTask: string;
 };
 
+type forgotPasswordPayload = {
+  username: string;
+  email: string;
+};
+
+type forgotPasswordResponse = {
+  code: number;
+  success: string;
+  message: string | undefined;
+};
+
+type updatePasswordPayload = {
+  updatedpassword: string;
+};
+
+type updatePasswordResponse = {
+  code: number;
+  success: string;
+  message: string | undefined;
+};
+
 type accessToken = {
   accessToken: string;
 };
@@ -72,4 +93,8 @@ export type {
   authHeader,
   task,
   taskResponse,
+  forgotPasswordPayload,
+  forgotPasswordResponse,
+  updatePasswordPayload,
+  updatePasswordResponse,
 };

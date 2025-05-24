@@ -5,10 +5,11 @@ import { FormsModule } from '@angular/forms';
 import { environment } from '../../environments/environment';
 import { type loginResponse, loginPayload } from '../../types/type';
 import { TokenService } from '../../service/token.service';
+import { ModalComponent } from '../../components/modal/modal.component';
 
 @Component({
   selector: 'app-landingpage',
-  imports: [FormsModule],
+  imports: [FormsModule, ModalComponent],
   templateUrl: './landingpage.component.html',
   styleUrl: './landingpage.component.css',
   providers: [QueryService, Router],
@@ -18,6 +19,7 @@ export class LandingpageComponent {
   password = '';
   error: string | undefined = '';
   private URL_LOGIN = environment.URL_LOGIN;
+  forgotPassword = false;
 
   constructor(
     private queryService: QueryService,
@@ -45,5 +47,13 @@ export class LandingpageComponent {
           this.error = e.error.message;
         },
       });
+  }
+
+  showModal() {
+    this.forgotPassword = true;
+  }
+
+  closeModal() {
+    this.forgotPassword = false;
   }
 }
