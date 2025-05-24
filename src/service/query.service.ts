@@ -2,12 +2,11 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import {
-  type updatedTask,
-  authHeader,
-  task,
-  taskResponse,
-} from '../types/type';
+import { type taskResponse } from '../types/type';
+
+type authHeader = {
+  authorization: string;
+};
 
 @Injectable({
   providedIn: 'root',

@@ -3,9 +3,19 @@ import { QueryService } from '../../service/query.service';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { environment } from '../../environments/environment';
-import { type loginResponse, loginPayload } from '../../types/type';
 import { TokenService } from '../../service/token.service';
 import { ModalComponent } from '../../components/modal/modal.component';
+
+interface loginResponse {
+  code: number;
+  accessToken: string | undefined;
+  message: string | undefined;
+}
+
+type loginPayload = {
+  username: string;
+  password: string;
+};
 
 @Component({
   selector: 'app-landingpage',

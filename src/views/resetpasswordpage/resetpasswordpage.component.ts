@@ -3,11 +3,17 @@ import { QueryService } from '../../service/query.service';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { environment } from '../../environments/environment';
-import {
-  type updatePasswordPayload,
-  type updatePasswordResponse,
-} from '../../types/type';
 import { TokenService } from '../../service/token.service';
+
+type updatePasswordPayload = {
+  updatedpassword: string;
+};
+
+type updatePasswordResponse = {
+  code: number;
+  success: string;
+  message: string | undefined;
+};
 
 @Component({
   selector: 'app-resetpassword',

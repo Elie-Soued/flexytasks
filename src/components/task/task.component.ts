@@ -6,12 +6,10 @@ import { environment } from '../../environments/environment';
 import { FormsModule } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
-import {
-  type task,
-  type updatedTask,
-  type checkedTask,
-  taskResponse,
-} from '../../types/type';
+import { TokenService } from '../../service/token.service';
+
+import { type task, type taskResponse } from '../../types/type';
+
 import {
   faTrash,
   faEdit,
@@ -20,7 +18,14 @@ import {
   faStrikethrough,
   faBroom,
 } from '@fortawesome/free-solid-svg-icons';
-import { TokenService } from '../../service/token.service';
+
+type updatedTask = {
+  updatedTask: string;
+};
+
+type checkedTask = {
+  checkedTask: boolean;
+};
 
 @Component({
   selector: 'app-task',

@@ -3,11 +3,18 @@ import { QueryService } from '../../service/query.service';
 import { FormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import {
-  type forgotPasswordPayload,
-  type forgotPasswordResponse,
-} from '../../types/type';
 import { environment } from '../../environments/environment';
+
+type forgotPasswordPayload = {
+  username: string;
+  email: string;
+};
+
+type forgotPasswordResponse = {
+  code: number;
+  success: string;
+  message: string | undefined;
+};
 
 @Component({
   selector: 'app-modal',

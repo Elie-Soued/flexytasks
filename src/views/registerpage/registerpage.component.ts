@@ -5,7 +5,17 @@ import { QueryService } from '../../service/query.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { environment } from '../../environments/environment';
-import { registerPayload, type registerError } from '../../types/type';
+
+interface registerError {
+  message: string;
+}
+
+type registerPayload = {
+  username: string;
+  password: string;
+  fullname: string;
+  email: string;
+};
 
 @Component({
   selector: 'app-registerpage',
