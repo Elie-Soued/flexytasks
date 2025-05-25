@@ -21,7 +21,7 @@ type registerPayload = {
   selector: 'app-registerpage',
   imports: [FormsModule, FontAwesomeModule],
   templateUrl: './registerpage.component.html',
-  providers: [Router, QueryService],
+  providers: [],
   styleUrl: './registerpage.component.css',
 })
 export class RegisterpageComponent {

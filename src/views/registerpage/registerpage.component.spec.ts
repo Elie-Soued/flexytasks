@@ -2,17 +2,29 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RegisterpageComponent } from './registerpage.component';
 import { By } from '@angular/platform-browser';
 import { provideHttpClient, withFetch } from '@angular/common/http';
-import { provideRouter } from '@angular/router';
+import { provideRouter, Router } from '@angular/router';
 import { routes } from '../../app/app.routes';
+import { QueryService } from '../../service/query.service';
+import { of } from 'rxjs';
 
 describe('RegisterpageComponent', () => {
   let component: RegisterpageComponent;
   let fixture: ComponentFixture<RegisterpageComponent>;
+  let queryService: jasmine.SpyObj<QueryService>;
+  let routerSpy: jasmine.SpyObj<Router>;
 
   beforeEach(async () => {
+    queryService = jasmine.createSpyObj('QueryService', ['post']);
+    routerSpy = jasmine.createSpyObj('Router', ['navigate']);
+
     await TestBed.configureTestingModule({
       imports: [RegisterpageComponent],
-      providers: [provideHttpClient(withFetch()), provideRouter(routes)],
+      providers: [
+        provideHttpClient(withFetch()),
+        provideRouter(routes),
+        { provide: QueryService, useValue: queryService },
+        { provide: Router, useValue: routerSpy },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(RegisterpageComponent);
@@ -144,7 +156,44 @@ describe('RegisterpageComponent', () => {
     expect(submitButton.disabled).toBeFalsy();
   });
 
-  // it('If all correct data are entered and user does not exist previously, user should be redirected to the login page', () => {
-  //   // to be written
-  // });
+  it('If all correct data are entered and user does not exist previously, user should be redirected to the login page', async () => {
+    const mockResponse = { message: 'User registered successfully' };
+
+    queryService.post.and.returnValue(of(mockResponse));
+
+    const emailInput = fixture.debugElement.query(
+      By.css('#email')
+    ).nativeElement;
+    const fullnameInput = fixture.debugElement.query(
+      By.css('#fullname')
+    ).nativeElement;
+    const usernameInput = fixture.debugElement.query(
+      By.css('#username')
+    ).nativeElement;
+    const passwordInput = fixture.debugElement.query(
+      By.css('#password')
+    ).nativeElement;
+    const submitButton = fixture.debugElement.query(
+      By.css('#submit')
+    ).nativeElement;
+
+    usernameInput.value = 'fooUserName';
+    usernameInput.dispatchEvent(new Event('input'));
+    fullnameInput.value = 'fooFullName';
+    fullnameInput.dispatchEvent(new Event('input'));
+    emailInput.value = 'foo@gmail.com';
+    emailInput.dispatchEvent(new Event('input'));
+    passwordInput.value = 'fooPassword';
+    passwordInput.dispatchEvent(new Event('input'));
+
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    submitButton.click();
+
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    expect(routerSpy.navigate).toHaveBeenCalledWith(['']);
+  });
 });

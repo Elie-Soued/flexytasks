@@ -22,7 +22,7 @@ type loginPayload = {
   imports: [FormsModule, ModalComponent],
   templateUrl: './landingpage.component.html',
   styleUrl: './landingpage.component.css',
-  providers: [QueryService, Router],
+  providers: [],
 })
 export class LandingpageComponent {
   username = '';
