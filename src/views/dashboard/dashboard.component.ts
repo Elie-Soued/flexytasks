@@ -19,7 +19,7 @@ import { TokenService } from '../../service/token.service';
   selector: 'app-dashboard',
   imports: [TaskcontainerComponent, FormsModule, FontAwesomeModule],
   templateUrl: './dashboard.component.html',
-  providers: [QueryService, Router, PaginationService],
+  providers: [],
   styleUrl: './dashboard.component.css',
 })
 export class DashboardComponent implements OnInit, OnDestroy {
@@ -35,12 +35,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
   // Subscriptions
   private nextPageSub: Subscription = new Subscription();
   private previousPageSub: Subscription = new Subscription();
-  private queryService = inject(QueryService);
 
   constructor(
     private router: Router,
     private tokenService: TokenService,
-    public paginationService: PaginationService
+    public paginationService: PaginationService,
+    private queryService: QueryService
   ) {
     this.token = this.tokenService.getToken();
   }
