@@ -20,7 +20,7 @@ type updatePasswordResponse = {
   imports: [FormsModule],
   templateUrl: './resetpasswordpage.component.html',
   styleUrl: './resetpasswordpage.component.css',
-  providers: [QueryService, Router],
+  providers: [],
 })
 export class ResetpasswordpageComponent implements OnInit {
   token: string = '';
@@ -58,7 +58,7 @@ export class ResetpasswordpageComponent implements OnInit {
       .subscribe({
         next: (response: updatePasswordResponse) => {
           const { code, message } = response;
-          console.log('response :>> ', response);
+
           if (code === 200) {
             this.router.navigate(['/']);
           } else {
