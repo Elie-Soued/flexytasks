@@ -7,20 +7,28 @@
 }
 
 
-/* Only apply bg-landingpage on small screens */
 .bg-landingpage-sm {
   background: url('../../assets/landingpage.jpg') no-repeat center center;
   background-size: cover;
+   background-color: #ebebeb;
   min-height: 90vh;
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
+
+}
+
+/* 992px or less */
+ @media (max-width: 992px) {
+  .bg-landingpage-sm {
+    background-position: center 400px;
+  }
 }
 
   .landingpageHeight{
   height: 100vh;
 }
 
-
+/* 992px or more */
 @media (min-width: 992px) { /* lg and up */
   .bg-landingpage-sm {
     background: none !important;
