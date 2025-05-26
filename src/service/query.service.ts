@@ -1,50 +1,73 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-
+import { environment } from '../environments/environment';
 import { type taskResponse } from '../type';
-
-type authHeader = {
-  authorization: string;
-};
+import { TokenService } from './token.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class QueryService {
-  constructor(private http: HttpClient) {}
+  private BASE_URL = environment.BASE_URL;
+  constructor(private http: HttpClient, private tokenService: TokenService) {}
 
   post<TResponse, TBody>(
     url: string,
     body: TBody,
-    headers?: authHeader,
     params?: HttpParams
   ): Observable<TResponse> {
-    return this.http.post<TResponse>(url, body, { headers, params });
+    return this.http.post<TResponse>(
+      `${this.BASE_URL}/${url}`,
+
+      body,
+      {
+        headers: {
+          authorization: this.tokenService.getToken(),
+        },
+        params,
+      }
+    );
   }
 
-  get(
-    url: string,
-    headers: authHeader,
-    params: HttpParams
-  ): Observable<taskResponse> {
-    return this.http.get<taskResponse>(url, { headers, params });
+  get(url: string, params: HttpParams): Observable<taskResponse> {
+    return this.http.get<taskResponse>(
+      `${this.BASE_URL}/${url}`,
+
+      {
+        headers: {
+          authorization: this.tokenService.getToken(),
+        },
+
+        params,
+      }
+    );
   }
 
-  delete(
-    url: string,
-    headers: authHeader,
-    params: HttpParams
-  ): Observable<taskResponse> {
-    return this.http.delete<taskResponse>(url, { headers, params });
+  delete(url: string, params: HttpParams): Observable<taskResponse> {
+    return this.http.delete<taskResponse>(
+      `${this.BASE_URL}/${url}`,
+
+      {
+        headers: {
+          authorization: this.tokenService.getToken(),
+        },
+
+        params,
+      }
+    );
   }
 
   update<TBody>(
     url: string,
     body: TBody,
-    headers: authHeader,
     params: HttpParams
   ): Observable<taskResponse> {
-    return this.http.put<taskResponse>(url, body, { headers, params });
+    return this.http.put<taskResponse>(`${this.BASE_URL}/${url}`, body, {
+      headers: {
+        authorization: this.tokenService.getToken(),
+      },
+      params,
+    });
   }
 }

@@ -3,7 +3,6 @@ import { FormsModule } from '@angular/forms';
 import { HttpParams } from '@angular/common/http';
 import { TaskcontainerComponent } from '../../components/taskcontainer/taskcontainer.component';
 import { QueryService } from '../../service/query.service';
-import { environment } from '../../environments/environment';
 import { Router } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {
@@ -23,7 +22,6 @@ import { TokenService } from '../../service/token.service';
   styleUrl: './dashboard.component.css',
 })
 export class DashboardComponent implements OnInit, OnDestroy {
-  token = '';
   tasks: task[] = [];
   logoutIcon = faRightFromBracket;
   deleteAll = faTrashAlt;
@@ -41,9 +39,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     private tokenService: TokenService,
     public paginationService: PaginationService,
     private queryService: QueryService
-  ) {
-    this.token = this.tokenService.getToken();
-  }
+  ) {}
 
   ngOnInit(): void {
     this.getAllTasks();
@@ -70,10 +66,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     this.queryService
       .get(
-        environment.URL,
-        {
-          authorization: this.token,
-        },
+        'tasks',
 
         params
       )

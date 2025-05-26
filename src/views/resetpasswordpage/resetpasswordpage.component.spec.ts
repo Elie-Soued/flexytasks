@@ -129,11 +129,9 @@ describe('ResetpasswordpageComponent', () => {
 
     updatePasswordBtn.click();
 
-    expect(queryService.post).toHaveBeenCalledWith(
-      environment.URL_UPDATE_PASSWORD,
-      { updatedpassword: 'pilex' },
-      { authorization: 'myAccessToken' }
-    );
+    expect(queryService.post).toHaveBeenCalledWith(`users/updatepassword`, {
+      updatedpassword: 'pilex',
+    });
   });
 
   it('redirection to landing page when call is successfully executed', async () => {

@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { QueryService } from '../../service/query.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
-import { environment } from '../../environments/environment';
 
 interface registerError {
   message: string;
@@ -31,14 +30,13 @@ export class RegisterpageComponent {
   fullname = '';
   error = '';
   arrow = faArrowLeft;
-  private URL_REGISTER = environment.URL_REGISTER;
 
   constructor(private queryService: QueryService, private router: Router) {}
 
   register(): void {
     this.queryService
       .post<void | registerError, registerPayload>(
-        this.URL_REGISTER,
+        'users/register',
 
         {
           username: this.username,

@@ -5,12 +5,9 @@ import { PaginationComponent } from '../../components/pagination/pagination.comp
 import { PaginationService } from '../../service/pagination.service';
 import { FormsModule } from '@angular/forms';
 import { QueryService } from '../../service/query.service';
-import { environment } from '../../environments/environment';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faPlus, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { type task, type taskResponse } from '../../type';
-
-import { TokenService } from '../../service/token.service';
 
 type addNewTaskPayload = {
   newTask: string;
@@ -33,13 +30,8 @@ export class TaskcontainerComponent {
 
   constructor(
     private queryService: QueryService,
-    private paginationService: PaginationService,
-    private tokenService: TokenService
-  ) {
-    this.token = this.tokenService.getToken();
-  }
-
-  private URL = environment.URL;
+    private paginationService: PaginationService
+  ) {}
 
   updateTask(response: taskResponse): void {
     this.tasks = response.tasks;
@@ -53,15 +45,12 @@ export class TaskcontainerComponent {
 
     this.queryService
       .post<taskResponse, addNewTaskPayload>(
-        this.URL,
+        'tasks',
 
         {
           newTask: this.newTask,
         },
 
-        {
-          authorization: this.token,
-        },
         params
       )
       .subscribe({
@@ -85,10 +74,7 @@ export class TaskcontainerComponent {
 
     this.queryService
       .delete(
-        `${environment.URL}`,
-        {
-          authorization: this.token,
-        },
+        'tasks',
 
         params
       )

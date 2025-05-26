@@ -5,14 +5,13 @@ import { TaskcontainerComponent } from './taskcontainer.component';
 import { TaskComponent } from '../task/task.component';
 import { routes } from '../../app/app.routes';
 import { By } from '@angular/platform-browser';
-import { provideStore } from '@ngrx/store';
-import { tokenReducer } from '../../store/token.reducer';
-import { TokenEffects } from '../../store/token.effects';
-import { provideEffects } from '@ngrx/effects';
+import { QueryService } from '../../service/query.service';
 
 describe('TaskcontainerComponent', () => {
   let component: TaskcontainerComponent;
+  let queryService: jasmine.SpyObj<QueryService>;
   let fixture: ComponentFixture<TaskcontainerComponent>;
+
   const tasks = [
     { id: 1, content: 'task1', userID: 1, checked: false },
     { id: 2, content: 'task2', userID: 1, checked: false },
@@ -30,13 +29,14 @@ describe('TaskcontainerComponent', () => {
   ];
 
   beforeEach(async () => {
+    queryService = jasmine.createSpyObj('QueryService', ['post', 'delete']);
+
     await TestBed.configureTestingModule({
       imports: [TaskcontainerComponent, TaskComponent],
       providers: [
         provideHttpClient(withFetch()),
         provideRouter(routes),
-        provideStore({ token: tokenReducer }),
-        provideEffects([TokenEffects]),
+        { provide: QueryService, useValue: queryService },
       ],
     }).compileComponents();
 

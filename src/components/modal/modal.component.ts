@@ -3,7 +3,6 @@ import { QueryService } from '../../service/query.service';
 import { FormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import { environment } from '../../environments/environment';
 
 type forgotPasswordPayload = {
   username: string;
@@ -29,7 +28,6 @@ export class ModalComponent {
   error: string | undefined;
   success: string | undefined;
   closeModalIcon = faTimes;
-  private URL_FORGOT_PASSWORD = environment.URL_FORGOT_PASSWORD;
 
   constructor(private queryService: QueryService) {}
 
@@ -40,7 +38,7 @@ export class ModalComponent {
   resetPassword() {
     this.queryService
       .post<forgotPasswordResponse, forgotPasswordPayload>(
-        this.URL_FORGOT_PASSWORD,
+        'users/forgotpassword',
         {
           username: this.username,
           email: this.email,

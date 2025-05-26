@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { QueryService } from '../../service/query.service';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { environment } from '../../environments/environment';
 import { TokenService } from '../../service/token.service';
 import { ModalComponent } from '../../components/modal/modal.component';
 
@@ -28,7 +27,6 @@ export class LandingpageComponent {
   username = '';
   password = '';
   error: string | undefined = '';
-  private URL_LOGIN = environment.URL_LOGIN;
   forgotPassword = false;
 
   constructor(
@@ -39,7 +37,7 @@ export class LandingpageComponent {
 
   login(): void {
     this.queryService
-      .post<loginResponse, loginPayload>(this.URL_LOGIN, {
+      .post<loginResponse, loginPayload>('users/login', {
         username: this.username,
         password: this.password,
       })

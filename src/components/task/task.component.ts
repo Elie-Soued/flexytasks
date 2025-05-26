@@ -9,11 +9,9 @@ import {
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { QueryService } from '../../service/query.service';
 import { PaginationService } from '../../service/pagination.service';
-import { environment } from '../../environments/environment';
 import { FormsModule } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
-import { TokenService } from '../../service/token.service';
 
 import { type task, type taskResponse } from '../../type';
 
@@ -68,15 +66,10 @@ export class TaskComponent implements OnInit, OnDestroy {
   offset = 0;
   totalCount = 0;
 
-  token = '';
-
   constructor(
     private queryService: QueryService,
-    private paginationService: PaginationService,
-    private tokenService: TokenService
-  ) {
-    this.token = this.tokenService.getToken();
-  }
+    private paginationService: PaginationService
+  ) {}
 
   ngOnInit(): void {
     this.updatedTask = this.task.content;
@@ -98,10 +91,7 @@ export class TaskComponent implements OnInit, OnDestroy {
 
     this.queryService
       .delete(
-        `${environment.URL}/${this.task.id}`,
-        {
-          authorization: this.token,
-        },
+        `tasks/${this.task.id}`,
 
         params
       )
@@ -128,15 +118,12 @@ export class TaskComponent implements OnInit, OnDestroy {
 
     this.queryService
       .update<updatedTask>(
-        `${environment.URL}/${this.task.id}`,
+        `tasks/${this.task.id}`,
 
         {
           updatedTask: this.updatedTask,
         },
 
-        {
-          authorization: this.token,
-        },
         params
       )
       .subscribe({
@@ -156,15 +143,11 @@ export class TaskComponent implements OnInit, OnDestroy {
 
     this.queryService
       .update<checkedTask>(
-        `${environment.URL}/${this.task.id}`,
-
+        `tasks/${this.task.id}`,
         {
           checkedTask: checked,
         },
 
-        {
-          authorization: this.token,
-        },
         params
       )
       .subscribe({

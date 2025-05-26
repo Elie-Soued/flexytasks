@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { QueryService } from '../../service/query.service';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { environment } from '../../environments/environment';
 import { TokenService } from '../../service/token.service';
 
 type updatePasswordPayload = {
@@ -27,7 +26,6 @@ export class ResetpasswordpageComponent implements OnInit {
   password = '';
   confirmedpassword = '';
   error: string | undefined = '';
-  private URL_UPDATE_PASSWORD = environment.URL_UPDATE_PASSWORD;
 
   constructor(
     private queryService: QueryService,
@@ -46,13 +44,10 @@ export class ResetpasswordpageComponent implements OnInit {
   updatePassword() {
     this.queryService
       .post<updatePasswordResponse, updatePasswordPayload>(
-        this.URL_UPDATE_PASSWORD,
+        'users/updatepassword',
 
         {
           updatedpassword: this.confirmedpassword,
-        },
-        {
-          authorization: this.tokenService.getToken(),
         }
       )
       .subscribe({

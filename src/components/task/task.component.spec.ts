@@ -1,27 +1,27 @@
-import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import { provideRouter } from '@angular/router';
 import { routes } from '../../app/app.routes';
 import { TaskComponent } from './task.component';
 import { By } from '@angular/platform-browser';
-import { provideStore } from '@ngrx/store';
-import { tokenReducer } from '../../store/token.reducer';
-import { provideEffects } from '@ngrx/effects';
-import { TokenEffects } from '../../store/token.effects';
+import { QueryService } from '../../service/query.service';
 
 describe('TaskComponent', () => {
   let component: TaskComponent;
   let fixture: ComponentFixture<TaskComponent>;
+  let queryService: jasmine.SpyObj<QueryService>;
   const task = { id: 1, content: 'task1', userID: 1, checked: false };
 
   beforeEach(async () => {
+    queryService = jasmine.createSpyObj('QueryService', ['delete', 'update']);
+
     await TestBed.configureTestingModule({
       imports: [TaskComponent],
       providers: [
         provideHttpClient(withFetch()),
         provideRouter(routes),
-        provideStore({ token: tokenReducer }),
-        provideEffects([TokenEffects]),
+
+        { provide: QueryService, useValue: queryService },
       ],
     }).compileComponents();
 
