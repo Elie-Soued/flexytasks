@@ -1,5 +1,5 @@
 .bg-registerpage{
-  background: url('../../assets/registerpage.jpg') no-repeat center center;
+  background: url('../../../public/registerpage.jpg') no-repeat center center;
   background-size: cover;
   min-height: 90vh;
   border-top-right-radius: 10px;
@@ -8,7 +8,7 @@
 
 
 .bg-registerpage-sm{
-  background: url('../../assets/registerpage.jpg') no-repeat center center;
+  background: url('../../../public/registerpage.jpg') no-repeat center center;
   background-size: cover;
   min-height: 90vh;
   border-top-right-radius: 10px;

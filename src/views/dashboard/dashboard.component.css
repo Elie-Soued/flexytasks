@@ -1,5 +1,5 @@
 .bg-dashboardpage{
-  background: url('../../assets/todo.jpg') no-repeat center center;
+  background: url('../../../public/todo.jpg') no-repeat center center;
   background-size: cover;
   min-height: 90vh;
   border-top-right-radius: 10px;
@@ -8,7 +8,7 @@
 
 
 .bg-dashboardpage-sm{
-  background: url('../../assets/todo.jpg') no-repeat center center;
+  background: url('../../../public/todo.jpg') no-repeat center center;
   background-size: cover;
   min-height: 90vh;
   border-top-right-radius: 10px;

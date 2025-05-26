@@ -1,5 +1,5 @@
 .bg-landingpage {
-  background: url('../../assets/landingpage.jpg') no-repeat center center;
+  background: url('../../../public/landingpage.jpg') no-repeat center center;
   background-size: cover;
   min-height: 90vh;
   border-top-right-radius: 10px;
@@ -8,12 +8,13 @@
 
 
 .bg-landingpage-sm {
-  background: url('../../assets/landingpage.jpg') no-repeat center center;
+  background: url('../../../public/landingpage.jpg') no-repeat center center;
   background-size: cover;
-   background-color: #ebebeb;
+  background-color: #ebebeb;
   min-height: 90vh;
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
+
 
 }
 
