@@ -3,7 +3,7 @@ import { QueryService } from '../../service/query.service';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { TokenService } from '../../service/token.service';
-import { ModalComponent } from '../../components/modal/modal.component';
+import { ForgotPasswordModalComponent } from './forgotpasswordmodal/forgotpasswordmodal.component';
 
 interface loginResponse {
   code: number;
@@ -18,7 +18,7 @@ type loginPayload = {
 
 @Component({
   selector: 'app-landingpage',
-  imports: [FormsModule, ModalComponent],
+  imports: [FormsModule, ForgotPasswordModalComponent],
   templateUrl: './landingpage.component.html',
   styleUrl: './landingpage.component.css',
   providers: [],

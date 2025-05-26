@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ModalComponent } from './modal.component';
+import { ForgotPasswordModalComponent } from './forgotpasswordmodal.component';
 import {
   HttpTestingController,
   provideHttpClientTesting,
@@ -7,12 +7,12 @@ import {
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import { By } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-import { QueryService } from '../../service/query.service';
 import { of } from 'rxjs';
+import { QueryService } from '../../../service/query.service';
 
-describe('ModalComponent', () => {
-  let component: ModalComponent;
-  let fixture: ComponentFixture<ModalComponent>;
+describe('ForgotPasswordModalComponent', () => {
+  let component: ForgotPasswordModalComponent;
+  let fixture: ComponentFixture<ForgotPasswordModalComponent>;
   let httpTesting: HttpTestingController;
   let queryService: jasmine.SpyObj<QueryService>;
 
@@ -20,7 +20,7 @@ describe('ModalComponent', () => {
     queryService = jasmine.createSpyObj('QueryService', ['post']);
 
     await TestBed.configureTestingModule({
-      imports: [FormsModule, ModalComponent],
+      imports: [FormsModule, ForgotPasswordModalComponent],
       providers: [
         provideHttpClient(withFetch()),
         provideHttpClientTesting(),
@@ -28,7 +28,7 @@ describe('ModalComponent', () => {
       ],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(ModalComponent);
+    fixture = TestBed.createComponent(ForgotPasswordModalComponent);
     component = fixture.componentInstance;
     httpTesting = TestBed.inject(HttpTestingController);
     fixture.detectChanges();

@@ -1,8 +1,8 @@
 import { Component, Output, EventEmitter } from '@angular/core';
-import { QueryService } from '../../service/query.service';
 import { FormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { QueryService } from '../../../service/query.service';
 
 type forgotPasswordPayload = {
   username: string;
@@ -16,12 +16,12 @@ type forgotPasswordResponse = {
 };
 
 @Component({
-  selector: 'app-modal',
+  selector: 'app-forgot-password-modal',
   imports: [FontAwesomeModule, FormsModule],
-  templateUrl: './modal.component.html',
-  styleUrl: './modal.component.css',
+  templateUrl: './forgotpasswordmodal.component.html',
+  styleUrl: './forgotpasswordmodal.component.css',
 })
-export class ModalComponent {
+export class ForgotPasswordModalComponent {
   @Output() closeDialog = new EventEmitter();
   username = '';
   email = '';
