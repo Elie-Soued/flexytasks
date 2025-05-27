@@ -1,3 +1,4 @@
+import { HttpParams } from '@angular/common/http';
 import { Injectable, signal } from '@angular/core';
 
 @Injectable({
@@ -16,5 +17,11 @@ export class PaginationService {
 
   updateTotalCount(value: number): void {
     this.totalCount.set(value);
+  }
+
+  prepareParams(): HttpParams {
+    return new HttpParams()
+      .set('offset', this.offset().toString())
+      .set('limit', this.limit().toString());
   }
 }
