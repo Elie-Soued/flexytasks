@@ -10,11 +10,11 @@ export class PaginationService {
 
   constructor() {}
 
-  updateOffset(value: number) {
+  updateOffset(value: number): void {
     this.offset.set(value);
   }
 
-  updateTotalCount(value: number) {
+  updateTotalCount(value: number): void {
     this.totalCount.set(value);
   }
 }
