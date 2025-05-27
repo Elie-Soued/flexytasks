@@ -45,7 +45,7 @@
         class="btn"
         id="strikethroughButton"
         style="border-radius: 0px; background-color: transparent"
-        (click)="checked = !checked; checkTask(checked)"
+        (click)="task.checked = !task.checked; checkTask(task.checked)"
       >
         <fa-icon class="iconColor" [icon]="strikethrough"></fa-icon>
       </button>
