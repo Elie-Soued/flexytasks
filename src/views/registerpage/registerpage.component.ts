@@ -1,20 +1,9 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
-import { QueryService } from '../../service/query.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
-
-interface registerError {
-  message: string;
-}
-
-type registerPayload = {
-  username: string;
-  password: string;
-  fullname: string;
-  email: string;
-};
+import { UserService } from '../../service/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-registerpage',
@@ -31,28 +20,18 @@ export class RegisterpageComponent {
   error = '';
   arrow = faArrowLeft;
 
-  constructor(private queryService: QueryService, private router: Router) {}
+  constructor(private userService: UserService, private router: Router) {}
 
   register(): void {
-    this.queryService
-      .post<void | registerError, registerPayload>(
-        'users/register',
-
-        {
-          username: this.username,
-          password: this.password,
-          email: this.email,
-          fullname: this.fullname,
-        }
-      )
+    this.userService
+      .register(this.username, this.password, this.email, this.fullname)
       .subscribe({
         next: () => {
+          this.error = '';
           this.router.navigate(['']);
         },
-        error: (e: any) => {
-          if (e.error) {
-            this.error = e.error.message;
-          }
+        error: (e) => {
+          this.error = e.error?.message;
         },
       });
   }

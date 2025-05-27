@@ -1,18 +1,14 @@
-import { Component, effect, inject, Injector, signal } from '@angular/core';
+import { Component, effect, inject, Injector } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpParams } from '@angular/common/http';
 import { TaskcontainerComponent } from '../../components/taskcontainer/taskcontainer.component';
-import { QueryService } from '../../service/query.service';
-import { Router } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { type task, type taskResponse } from '../../type';
 import { PaginationService } from '../../service/pagination.service';
-import { TokenService } from '../../service/token.service';
 import { TaskService } from '../../service/task.service';
 import {
   faRightFromBracket,
   faTrashAlt,
 } from '@fortawesome/free-solid-svg-icons';
+import { UserService } from '../../service/user.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -27,11 +23,9 @@ export class DashboardComponent {
   private injector = inject(Injector);
 
   constructor(
-    private router: Router,
-    private tokenService: TokenService,
     public paginationService: PaginationService,
-    private queryService: QueryService,
-    private taskService: TaskService
+    private taskService: TaskService,
+    private userService: UserService
   ) {}
 
   ngOnInit() {
@@ -46,33 +40,10 @@ export class DashboardComponent {
   }
 
   getAllTasks(): void {
-    const params = this.prepareParams();
-
-    this.queryService
-      .get(
-        'tasks',
-
-        params
-      )
-      .subscribe({
-        next: (response: taskResponse) => {
-          this.taskService.updateTasks(response.tasks);
-          this.paginationService.updateTotalCount(response.meta.totalCount);
-        },
-        error: (error: unknown) => {
-          console.log('error :>> ', error);
-        },
-      });
+    this.taskService.getAllTasks();
   }
 
   logout(): void {
-    this.tokenService.setToken('');
-    this.router.navigate(['/']);
-  }
-
-  prepareParams() {
-    return new HttpParams()
-      .set('offset', this.paginationService.offset().toString())
-      .set('limit', this.paginationService.limit().toString());
+    this.userService.logout();
   }
 }

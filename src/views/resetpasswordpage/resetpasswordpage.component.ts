@@ -1,18 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { QueryService } from '../../service/query.service';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { TokenService } from '../../service/token.service';
-
-type updatePasswordPayload = {
-  updatedpassword: string;
-};
-
-type updatePasswordResponse = {
-  code: number;
-  success: string;
-  message: string | undefined;
-};
+import { UserService } from '../../service/user.service';
 
 @Component({
   selector: 'app-resetpassword',
@@ -28,7 +18,7 @@ export class ResetpasswordpageComponent implements OnInit {
   error: string | undefined = '';
 
   constructor(
-    private queryService: QueryService,
+    private userService: UserService,
     private router: Router,
     private tokenService: TokenService
   ) {}
@@ -42,27 +32,19 @@ export class ResetpasswordpageComponent implements OnInit {
   }
 
   updatePassword() {
-    this.queryService
-      .post<updatePasswordResponse, updatePasswordPayload>(
-        'users/updatepassword',
+    this.userService.updatePassword(this.confirmedpassword).subscribe({
+      next: (response: any) => {
+        const { code, message } = response;
 
-        {
-          updatedpassword: this.confirmedpassword,
+        if (code === 200) {
+          this.router.navigate(['/']);
+        } else {
+          this.error = message;
         }
-      )
-      .subscribe({
-        next: (response: updatePasswordResponse) => {
-          const { code, message } = response;
-
-          if (code === 200) {
-            this.router.navigate(['/']);
-          } else {
-            this.error = message;
-          }
-        },
-        error: (e: any) => {
-          this.error = e.error.message;
-        },
-      });
+      },
+      error: (e: any) => {
+        this.error = e.error.message;
+      },
+    });
   }
 }
