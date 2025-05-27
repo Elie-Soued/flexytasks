@@ -9,7 +9,7 @@
       value="{{ task.content }}"
       [disabled]="disabled"
       [(ngModel)]="task.content"
-      (keyup.enter)="updateTask()"
+      (keyup.enter)="editTask()"
     />
   </div>
 
@@ -87,7 +87,7 @@
         class="btn"
         id="updateButton"
         style="border-radius: 0px"
-        (click)="updateTask()"
+        (click)="editTask()"
       >
         <fa-icon class="iconColor" [icon]="check"></fa-icon>
       </button>

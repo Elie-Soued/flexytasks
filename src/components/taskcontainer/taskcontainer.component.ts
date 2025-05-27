@@ -1,18 +1,11 @@
 import { Component, effect, inject, Injector, Input } from '@angular/core';
-import { HttpParams } from '@angular/common/http';
 import { TaskComponent } from '../task/task.component';
 import { PaginationComponent } from '../../components/pagination/pagination.component';
 import { PaginationService } from '../../service/pagination.service';
 import { FormsModule } from '@angular/forms';
-import { QueryService } from '../../service/query.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faPlus, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
-import { type taskResponse } from '../../type';
 import { TaskService } from '../../service/task.service';
-
-type addNewTaskPayload = {
-  newTask: string;
-};
 
 @Component({
   selector: 'app-taskcontainer',
@@ -41,7 +34,6 @@ export class TaskcontainerComponent {
   totalCount = 0;
 
   constructor(
-    private queryService: QueryService,
     private paginationService: PaginationService,
     private taskService: TaskService
   ) {}
@@ -58,58 +50,12 @@ export class TaskcontainerComponent {
     );
   }
 
-  updateTask(response: taskResponse): void {
-    this.taskService.updateTasks(response.tasks);
-    this.paginationService.updateTotalCount(response.meta.totalCount);
+  deleteAll(): void {
+    this.taskService.deleteAllTasks();
   }
 
   addTask(): void {
-    const params = this.prepareParams();
-
-    this.queryService
-      .post<taskResponse, addNewTaskPayload>(
-        'tasks',
-
-        {
-          newTask: this.newTask,
-        },
-
-        params
-      )
-      .subscribe({
-        next: (response: taskResponse) => {
-          this.updateTask(response);
-        },
-        error: (error: Error) => {
-          console.log('error :>> ', error);
-        },
-      });
-
+    this.taskService.addTask(this.newTask);
     this.newTask = '';
-  }
-
-  deleteAll(): void {
-    const params = this.prepareParams();
-
-    this.queryService
-      .delete(
-        'tasks',
-
-        params
-      )
-      .subscribe({
-        next: (response: taskResponse) => {
-          this.updateTask(response);
-        },
-        error: (error: unknown) => {
-          console.error(error);
-        },
-      });
-  }
-
-  prepareParams() {
-    return new HttpParams()
-      .set('offset', this.paginationService.offset().toString())
-      .set('limit', this.paginationService.limit().toString());
   }
 }
