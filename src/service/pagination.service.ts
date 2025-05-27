@@ -1,35 +1,20 @@
-import { Injectable } from '@angular/core';
-import { Subject, BehaviorSubject } from 'rxjs';
+import { Injectable, signal } from '@angular/core';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PaginationService {
-  private nextPageService = new Subject<void>();
-  private previousPageService = new Subject<void>();
-  private offsetService = new BehaviorSubject<number>(0);
-  private totalCountService = new BehaviorSubject<number>(0);
-
-  public nextPage$ = this.nextPageService.asObservable();
-  public previousPage$ = this.previousPageService.asObservable();
-  public offset$ = this.offsetService.asObservable();
-  public totalCount$ = this.totalCountService.asObservable();
+  offset = signal(0);
+  totalCount = signal(0);
+  limit = signal(5);
 
   constructor() {}
 
-  emitNextPage(): void {
-    this.nextPageService.next();
+  updateOffset(value: number) {
+    this.offset.set(value);
   }
 
-  emitPreviousPage(): void {
-    this.previousPageService.next();
-  }
-
-  emitOffset(value: number): void {
-    this.offsetService.next(value);
-  }
-
-  emitTotalCount(value: number): void {
-    this.totalCountService.next(value);
+  updateTotalCount(value: number) {
+    this.totalCount.set(value);
   }
 }

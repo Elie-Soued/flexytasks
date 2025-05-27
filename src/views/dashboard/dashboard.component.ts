@@ -1,18 +1,18 @@
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, effect, inject, Injector, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpParams } from '@angular/common/http';
 import { TaskcontainerComponent } from '../../components/taskcontainer/taskcontainer.component';
 import { QueryService } from '../../service/query.service';
 import { Router } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { type task, type taskResponse } from '../../type';
+import { PaginationService } from '../../service/pagination.service';
+import { TokenService } from '../../service/token.service';
+import { TaskService } from '../../service/task.service';
 import {
   faRightFromBracket,
   faTrashAlt,
 } from '@fortawesome/free-solid-svg-icons';
-import { type task, type taskResponse } from '../../type';
-import { PaginationService } from '../../service/pagination.service';
-import { Subscription } from 'rxjs';
-import { TokenService } from '../../service/token.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -21,48 +21,32 @@ import { TokenService } from '../../service/token.service';
   providers: [],
   styleUrl: './dashboard.component.css',
 })
-export class DashboardComponent implements OnInit, OnDestroy {
-  tasks: task[] = [];
+export class DashboardComponent {
   logoutIcon = faRightFromBracket;
   deleteAll = faTrashAlt;
-  // Pagination Variables
-  totalCount = 0;
-  offset = 0;
-  limit = 5;
-
-  // Subscriptions
-  private nextPageSub: Subscription = new Subscription();
-  private previousPageSub: Subscription = new Subscription();
+  private injector = inject(Injector);
 
   constructor(
     private router: Router,
     private tokenService: TokenService,
     public paginationService: PaginationService,
-    private queryService: QueryService
+    private queryService: QueryService,
+    private taskService: TaskService
   ) {}
 
-  ngOnInit(): void {
-    this.getAllTasks();
-
-    this.nextPageSub = this.paginationService.nextPage$.subscribe(() => {
-      this.offset = this.offset + this.limit;
-      this.paginationService.emitOffset(this.offset);
-      this.getAllTasks();
-    });
-
-    this.previousPageSub = this.paginationService.previousPage$.subscribe(
+  ngOnInit() {
+    effect(
       () => {
-        this.offset = this.offset - this.limit;
-        this.paginationService.emitOffset(this.offset);
-        this.getAllTasks();
-      }
+        if (this.paginationService.offset() !== null) {
+          this.getAllTasks();
+        }
+      },
+      { injector: this.injector }
     );
   }
 
   getAllTasks(): void {
-    const params = new HttpParams()
-      .set('offset', this.offset.toString())
-      .set('limit', this.limit.toString());
+    const params = this.prepareParams();
 
     this.queryService
       .get(
@@ -72,9 +56,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
       )
       .subscribe({
         next: (response: taskResponse) => {
-          this.tasks = response.tasks;
-          this.totalCount = response.meta.totalCount;
-          this.paginationService.emitTotalCount(this.totalCount);
+          this.taskService.updateTasks(response.tasks);
+          this.paginationService.updateTotalCount(response.meta.totalCount);
         },
         error: (error: unknown) => {
           console.log('error :>> ', error);
@@ -87,8 +70,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.router.navigate(['/']);
   }
 
-  ngOnDestroy(): void {
-    this.nextPageSub?.unsubscribe();
-    this.previousPageSub?.unsubscribe();
+  prepareParams() {
+    return new HttpParams()
+      .set('offset', this.paginationService.offset().toString())
+      .set('limit', this.paginationService.limit().toString());
   }
 }

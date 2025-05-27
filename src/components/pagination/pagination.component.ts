@@ -1,6 +1,5 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, effect, Injector } from '@angular/core';
 import { PaginationService } from '../../service/pagination.service';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-pagination',
@@ -8,37 +7,32 @@ import { Subscription } from 'rxjs';
   templateUrl: './pagination.component.html',
   providers: [],
 })
-export class PaginationComponent implements OnInit, OnDestroy {
-  @Input() limit = 5;
+export class PaginationComponent {
+  limit = 0;
   offset = 0;
   totalCount = 0;
-  private offsetSub: Subscription = new Subscription();
-  private totalCountSub: Subscription = new Subscription();
 
-  constructor(private paginationService: PaginationService) {}
+  constructor(
+    private paginationService: PaginationService,
+    private injector: Injector
+  ) {}
 
-  ngOnInit(): void {
-    this.offsetSub = this.paginationService.offset$.subscribe((data) => {
-      this.offset = data;
-    });
-
-    this.totalCountSub = this.paginationService.totalCount$.subscribe(
-      (data) => {
-        this.totalCount = data;
-      }
+  ngOnInit() {
+    effect(
+      () => {
+        this.offset = this.paginationService.offset();
+        this.totalCount = this.paginationService.totalCount();
+        this.limit = this.paginationService.limit();
+      },
+      { injector: this.injector }
     );
   }
 
   nextPage(): void {
-    this.paginationService.emitNextPage();
+    this.paginationService.updateOffset(this.offset + this.limit);
   }
 
   previousPage(): void {
-    this.paginationService.emitPreviousPage();
-  }
-
-  ngOnDestroy(): void {
-    this.offsetSub?.unsubscribe();
-    this.totalCountSub?.unsubscribe();
+    this.paginationService.updateOffset(this.offset - this.limit);
   }
 }

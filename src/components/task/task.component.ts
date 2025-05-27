@@ -1,20 +1,11 @@
-import {
-  Component,
-  Input,
-  Output,
-  EventEmitter,
-  OnInit,
-  OnDestroy,
-} from '@angular/core';
+import { TaskService } from '../../service/task.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { QueryService } from '../../service/query.service';
 import { PaginationService } from '../../service/pagination.service';
 import { FormsModule } from '@angular/forms';
-import { Subscription } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
-
 import { type task, type taskResponse } from '../../type';
-
+import { Component, Input, effect, inject, Injector } from '@angular/core';
 import {
   faTrash,
   faEdit,
@@ -38,16 +29,8 @@ type checkedTask = {
   templateUrl: './task.component.html',
   styleUrl: './task.component.css',
 })
-export class TaskComponent implements OnInit, OnDestroy {
-  //Inputs and Outputs
+export class TaskComponent {
   @Input() task!: task;
-  @Input() limit!: number;
-  @Output() removeTask = new EventEmitter();
-  @Output() editTask = new EventEmitter();
-
-  //Subscriptions
-  private offsetSub: Subscription = new Subscription();
-  private totalCountSub: Subscription = new Subscription();
 
   // Icons
   delete = faTrash;
@@ -62,27 +45,27 @@ export class TaskComponent implements OnInit, OnDestroy {
   checked = false;
   disabled = true;
 
-  // Pagination values that are updated
+  //Pagination values that are updated
   offset = 0;
   totalCount = 0;
+  limit = 0;
+
+  private injector = inject(Injector);
 
   constructor(
     private queryService: QueryService,
-    private paginationService: PaginationService
+    private paginationService: PaginationService,
+    private taskService: TaskService
   ) {}
 
-  ngOnInit(): void {
-    this.updatedTask = this.task.content;
-    this.checked = this.task.checked;
-
-    this.offsetSub = this.paginationService.offset$.subscribe((data) => {
-      this.offset = data;
-    });
-
-    this.totalCountSub = this.paginationService.totalCount$.subscribe(
-      (data) => {
-        this.totalCount = data;
-      }
+  ngOnInit() {
+    effect(
+      () => {
+        this.offset = this.paginationService.offset();
+        this.limit = this.paginationService.limit();
+        this.totalCount = this.paginationService.totalCount();
+      },
+      { injector: this.injector }
     );
   }
 
@@ -97,7 +80,7 @@ export class TaskComponent implements OnInit, OnDestroy {
       )
       .subscribe({
         next: (response: taskResponse) => {
-          this.removeTask.emit(response);
+          this.taskService.updateTasks(response.tasks);
         },
         error: (error: unknown) => {
           console.error(error);
@@ -110,7 +93,7 @@ export class TaskComponent implements OnInit, OnDestroy {
   }
 
   disableTask(): void {
-    this.updatedTask = '';
+    this.task.content = '';
   }
 
   updateTask(): void {
@@ -121,14 +104,14 @@ export class TaskComponent implements OnInit, OnDestroy {
         `tasks/${this.task.id}`,
 
         {
-          updatedTask: this.updatedTask,
+          updatedTask: this.task.content,
         },
 
         params
       )
       .subscribe({
         next: (tasks: taskResponse) => {
-          this.editTask.emit(tasks);
+          this.taskService.updateTasks(tasks.tasks);
         },
         error: (error: unknown) => {
           console.log('error :>> ', error);
@@ -152,7 +135,7 @@ export class TaskComponent implements OnInit, OnDestroy {
       )
       .subscribe({
         next: (tasks: taskResponse) => {
-          this.editTask.emit(tasks);
+          this.taskService.updateTasks(tasks.tasks);
         },
         error: (error: unknown) => {
           console.log('error :>> ', error);
@@ -162,14 +145,9 @@ export class TaskComponent implements OnInit, OnDestroy {
     this.disabled = true;
   }
 
-  ngOnDestroy(): void {
-    this.offsetSub?.unsubscribe();
-    this.totalCountSub?.unsubscribe();
-  }
-
   prepareParams(): HttpParams {
     return new HttpParams()
-      .set('offset', this.offset.toString())
-      .set('limit', this.limit.toString());
+      .set('offset', this.paginationService.offset().toString())
+      .set('limit', this.paginationService.limit().toString());
   }
 }

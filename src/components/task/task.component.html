@@ -5,11 +5,10 @@
       id="task"
       class="form-control task"
       [style.background-color]="disabled ? 'whitesmoke' : ''"
-      [style.text-decoration]="checked ? 'line-through' : ''"
+      [style.text-decoration]="task.checked ? 'line-through' : ''"
       value="{{ task.content }}"
       [disabled]="disabled"
-      [(ngModel)]="updatedTask"
-      #updatedTaskInput="ngModel"
+      [(ngModel)]="task.content"
       (keyup.enter)="updateTask()"
     />
   </div>
