@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { TokenService } from './token.service';
-import { environment } from '../../environments/environment';
+import { BASE_URL } from '../app.config';
 
 type loginResponse = {
   accessToken: string;
@@ -24,8 +24,6 @@ type updatePasswordResponse = {
   providedIn: 'root',
 })
 export class UserService {
-  private BASE_URL = environment.BASE_URL;
-
   constructor(
     private httpClient: HttpClient,
     private tokenService: TokenService,
@@ -38,7 +36,7 @@ export class UserService {
     email: string,
     fullname: string
   ) {
-    return this.httpClient.post<void>(`${this.BASE_URL}/users/register`, {
+    return this.httpClient.post<void>(`${BASE_URL}/users/register`, {
       username,
       password,
       email,
@@ -48,14 +46,14 @@ export class UserService {
 
   resetPassword(username: string, email: string) {
     return this.httpClient.post<forgotPasswordResponse>(
-      `${this.BASE_URL}/users/forgotpassword`,
+      `${BASE_URL}/users/forgotpassword`,
       { username, email }
     );
   }
 
   updatePassword(updatedpassword: string) {
     return this.httpClient.post<updatePasswordResponse>(
-      `${this.BASE_URL}/users/updatepassword`,
+      `${BASE_URL}/users/updatepassword`,
 
       {
         updatedpassword,
@@ -69,7 +67,7 @@ export class UserService {
   }
 
   login(username: string, password: string) {
-    return this.httpClient.post<loginResponse>(`${this.BASE_URL}/users/login`, {
+    return this.httpClient.post<loginResponse>(`${BASE_URL}/users/login`, {
       username,
       password,
     });

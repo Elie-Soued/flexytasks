@@ -1,6 +1,6 @@
 import { Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../environments/environment';
+import { BASE_URL } from '../../app.config';
 import { PaginationService } from '../../pagination/pagination.service';
 import { TokenService } from '../../sharedservices/token.service';
 
@@ -24,7 +24,6 @@ type tasksResponse = {
 })
 export class TaskService {
   tasks = signal<task[]>([]);
-  private BASE_URL = environment.BASE_URL;
 
   constructor(
     private paginationService: PaginationService,
@@ -35,7 +34,7 @@ export class TaskService {
   getAllTasks() {
     this.httpClient
       .get<tasksResponse>(
-        `${this.BASE_URL}/tasks`,
+        `${BASE_URL}/tasks`,
 
         {
           headers: {
@@ -59,7 +58,7 @@ export class TaskService {
   addTask(newTask: string) {
     this.httpClient
       .post<tasksResponse>(
-        `${this.BASE_URL}/tasks`,
+        `${BASE_URL}/tasks`,
 
         {
           newTask,
@@ -86,7 +85,7 @@ export class TaskService {
 
   deleteAllTasks() {
     this.httpClient
-      .delete<tasksResponse>(`${this.BASE_URL}/tasks`, {
+      .delete<tasksResponse>(`${BASE_URL}/tasks`, {
         headers: {
           authorization: this.tokenService.getToken(),
         },
@@ -107,7 +106,7 @@ export class TaskService {
   deleteTask(id: number): void {
     this.httpClient
       .delete<tasksResponse>(
-        `${this.BASE_URL}/tasks/${id}`,
+        `${BASE_URL}/tasks/${id}`,
 
         {
           headers: {
@@ -131,7 +130,7 @@ export class TaskService {
   editTask(id: number, updatedTask: string): void {
     this.httpClient
       .put<tasksResponse>(
-        `${this.BASE_URL}/tasks/${id}`,
+        `${BASE_URL}/tasks/${id}`,
 
         {
           updatedTask,
@@ -158,7 +157,7 @@ export class TaskService {
   checkTask(checked: boolean, id: number): void {
     this.httpClient
       .put<tasksResponse>(
-        `${this.BASE_URL}/tasks/${id}`,
+        `${BASE_URL}/tasks/${id}`,
         {
           checkedTask: checked,
         },
