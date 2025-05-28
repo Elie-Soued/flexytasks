@@ -1,8 +1,7 @@
 import { Component, Input, effect, inject, Injector } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { PaginationService } from '../../pagination/pagination.service';
-
-import { type task } from '../../../type';
+import { type task } from '../taskService/task.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import {

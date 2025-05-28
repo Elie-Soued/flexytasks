@@ -1,16 +1,22 @@
 import { Injectable, signal } from '@angular/core';
-import { type task } from '../../../type';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { PaginationService } from '../../pagination/pagination.service';
 import { TokenService } from '../../sharedservices/token.service';
 
-type updatedTask = {
-  updatedTask: string;
+export type task = {
+  id: number;
+  content: string;
+  checked: boolean;
+  userID: number;
 };
 
-type checkedTask = {
-  checkedTask: boolean;
+type tasksResponse = {
+  meta: {
+    totalCount: number;
+  };
+
+  tasks: task[];
 };
 
 @Injectable({
@@ -28,7 +34,7 @@ export class TaskService {
 
   getAllTasks() {
     this.httpClient
-      .get(
+      .get<tasksResponse>(
         `${this.BASE_URL}/tasks`,
 
         {
@@ -40,7 +46,7 @@ export class TaskService {
         }
       )
       .subscribe({
-        next: (response: any) => {
+        next: (response: tasksResponse) => {
           this.tasks.set(response.tasks);
           this.paginationService.updateTotalCount(response.meta.totalCount);
         },
@@ -52,7 +58,7 @@ export class TaskService {
 
   addTask(newTask: string) {
     this.httpClient
-      .post<any>(
+      .post<tasksResponse>(
         `${this.BASE_URL}/tasks`,
 
         {
@@ -68,7 +74,7 @@ export class TaskService {
         }
       )
       .subscribe({
-        next: (response: any) => {
+        next: (response: tasksResponse) => {
           this.tasks.set(response.tasks);
           this.paginationService.updateTotalCount(response.meta.totalCount);
         },
@@ -80,7 +86,7 @@ export class TaskService {
 
   deleteAllTasks() {
     this.httpClient
-      .delete(`${this.BASE_URL}/tasks`, {
+      .delete<tasksResponse>(`${this.BASE_URL}/tasks`, {
         headers: {
           authorization: this.tokenService.getToken(),
         },
@@ -88,7 +94,7 @@ export class TaskService {
         params: this.paginationService.prepareParams(),
       })
       .subscribe({
-        next: (response: any) => {
+        next: (response: tasksResponse) => {
           this.tasks.set(response.tasks);
           this.paginationService.updateTotalCount(response.meta.totalCount);
         },
@@ -100,7 +106,7 @@ export class TaskService {
 
   deleteTask(id: number): void {
     this.httpClient
-      .delete(
+      .delete<tasksResponse>(
         `${this.BASE_URL}/tasks/${id}`,
 
         {
@@ -112,7 +118,7 @@ export class TaskService {
         }
       )
       .subscribe({
-        next: (response: any) => {
+        next: (response: tasksResponse) => {
           this.tasks.set(response.tasks);
           this.paginationService.updateTotalCount(response.meta.totalCount);
         },
@@ -124,7 +130,7 @@ export class TaskService {
 
   editTask(id: number, updatedTask: string): void {
     this.httpClient
-      .put<updatedTask>(
+      .put<tasksResponse>(
         `${this.BASE_URL}/tasks/${id}`,
 
         {
@@ -140,7 +146,7 @@ export class TaskService {
         }
       )
       .subscribe({
-        next: (response: any) => {
+        next: (response: tasksResponse) => {
           this.tasks.set(response.tasks);
         },
         error: (error: unknown) => {
@@ -151,7 +157,7 @@ export class TaskService {
 
   checkTask(checked: boolean, id: number): void {
     this.httpClient
-      .put<checkedTask>(
+      .put<tasksResponse>(
         `${this.BASE_URL}/tasks/${id}`,
         {
           checkedTask: checked,
@@ -166,7 +172,7 @@ export class TaskService {
         }
       )
       .subscribe({
-        next: (response: any) => {
+        next: (response: tasksResponse) => {
           this.tasks.set(response.tasks);
         },
         error: (error: unknown) => {
