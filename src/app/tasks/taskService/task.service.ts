@@ -2,8 +2,8 @@ import { Injectable, signal } from '@angular/core';
 import { type task } from '../../../type';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
-import { TokenService } from '../../../service/token.service';
 import { PaginationService } from '../../pagination/pagination.service';
+import { TokenService } from '../../sharedservices/token.service';
 
 type updatedTask = {
   updatedTask: string;
@@ -27,8 +27,6 @@ export class TaskService {
   ) {}
 
   getAllTasks() {
-    console.log('here');
-
     this.httpClient
       .get(
         `${this.BASE_URL}/tasks`,
@@ -72,7 +70,7 @@ export class TaskService {
       .subscribe({
         next: (response: any) => {
           this.tasks.set(response.tasks);
-          this.paginationService.updateTotalCount(response.totalCount);
+          this.paginationService.updateTotalCount(response.meta.totalCount);
         },
         error: (error: Error) => {
           console.log('error :>> ', error);
@@ -92,7 +90,7 @@ export class TaskService {
       .subscribe({
         next: (response: any) => {
           this.tasks.set(response.tasks);
-          this.paginationService.updateTotalCount(response.totalCount);
+          this.paginationService.updateTotalCount(response.meta.totalCount);
         },
         error: (error: unknown) => {
           console.error(error);
@@ -116,7 +114,7 @@ export class TaskService {
       .subscribe({
         next: (response: any) => {
           this.tasks.set(response.tasks);
-          this.paginationService.updateTotalCount(response.totalCount);
+          this.paginationService.updateTotalCount(response.meta.totalCount);
         },
         error: (error: unknown) => {
           console.error(error);

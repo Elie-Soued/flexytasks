@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
-import { UserService } from '../../service/user.service';
+import { UserService } from '../../sharedservices/user.service';
 import { Router } from '@angular/router';
 
 @Component({

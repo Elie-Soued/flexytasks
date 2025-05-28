@@ -8,7 +8,7 @@ import { provideHttpClient, withFetch } from '@angular/common/http';
 import { By } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { of } from 'rxjs';
-import { QueryService } from '../../../service/query.service';
+import { QueryService } from '../../../sharedservices/query.service';
 
 describe('ForgotPasswordModalComponent', () => {
   let component: ForgotPasswordModalComponent;

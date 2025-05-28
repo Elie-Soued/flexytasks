@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { TokenService } from '../../service/token.service';
-import { UserService } from '../../service/user.service';
+import { TokenService } from '../../sharedservices/token.service';
+import { UserService } from '../../sharedservices/user.service';
 
 @Component({
   selector: 'app-resetpassword',

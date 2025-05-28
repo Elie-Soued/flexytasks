@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { setToken, getToken } from '../store/token.actions';
-import { selectedToken } from '../store/token.selectors';
+import { setToken, getToken } from '../../store/token.actions';
+import { selectedToken } from '../../store/token.selectors';
 
 @Injectable({
   providedIn: 'root',

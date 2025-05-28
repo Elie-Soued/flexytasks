@@ -2,7 +2,7 @@ import { Component, Output, EventEmitter } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import { UserService } from '../../../service/user.service';
+import { UserService } from '../../../sharedservices/user.service';
 
 @Component({
   selector: 'app-forgot-password-modal',

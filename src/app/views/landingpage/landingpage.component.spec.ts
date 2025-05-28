@@ -9,8 +9,8 @@ import { provideStore } from '@ngrx/store';
 import { tokenReducer } from '../../store/token.reducer';
 import { provideEffects } from '@ngrx/effects';
 import { TokenEffects } from '../../store/token.effects';
-import { QueryService } from '../../service/query.service';
-import { TokenService } from '../../service/token.service';
+import { QueryService } from '../../sharedservices/query.service';
+import { TokenService } from '../../sharedservices/token.service';
 import { of } from 'rxjs';
 
 describe('LandingpageComponent', () => {

@@ -4,7 +4,7 @@ import { By } from '@angular/platform-browser';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import { provideRouter, Router } from '@angular/router';
 import { routes } from '../../app/app.routes';
-import { QueryService } from '../../service/query.service';
+import { QueryService } from '../../sharedservices/query.service';
 import { of } from 'rxjs';
 
 describe('RegisterpageComponent', () => {

@@ -4,7 +4,7 @@ import { provideRouter } from '@angular/router';
 import { routes } from '../../app/app.routes';
 import { TaskComponent } from './task.component';
 import { By } from '@angular/platform-browser';
-import { QueryService } from '../../service/query.service';
+import { QueryService } from '../../sharedservices/query.service';
 
 describe('TaskComponent', () => {
   let component: TaskComponent;

@@ -1,5 +1,5 @@
-.bg-registerpage{
-  background: url('../../../public/registerpage.jpg') no-repeat center center;
+.bg-dashboardpage{
+  background: url('../../../../public/todo.jpg') no-repeat center center;
   background-size: cover;
   min-height: 90vh;
   border-top-right-radius: 10px;
@@ -7,30 +7,27 @@
 }
 
 
-.bg-registerpage-sm{
-  background: url('../../../public/registerpage.jpg') no-repeat center center;
+.bg-dashboardpage-sm{
+  background: url('../../../../public/todo.jpg') no-repeat center center;
   background-size: cover;
   min-height: 90vh;
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
-
-
 }
 
-  .registerPageHeight{
+
+
+.dashboardHeight{
   height: 100vh;
-
 }
 
 
 @media (min-width: 992px) { /* lg and up */
-  .bg-registerpage-sm {
+  .bg-dashboardpage-sm {
     background: none !important;
-
   }
 
-  .registerPageHeight{
+  .dashboardHeight{
   height: auto;
 }
-
 }

@@ -5,7 +5,7 @@ import { TaskcontainerComponent } from './taskcontainer.component';
 import { TaskComponent } from '../task/task.component';
 import { routes } from '../../app/app.routes';
 import { By } from '@angular/platform-browser';
-import { QueryService } from '../../service/query.service';
+import { QueryService } from '../../sharedservices/query.service';
 
 describe('TaskcontainerComponent', () => {
   let component: TaskcontainerComponent;

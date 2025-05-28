@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { TokenService } from '../../service/token.service';
+import { TokenService } from '../../sharedservices/token.service';
 import { ForgotPasswordModalComponent } from './forgotpasswordmodal/forgotpasswordmodal.component';
-import { UserService } from '../../service/user.service';
+import { UserService } from '../../sharedservices/user.service';
 
 interface loginResponse {
   code: number;

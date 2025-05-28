@@ -1,15 +1,14 @@
 import { Component, effect, inject, Injector } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { TaskcontainerComponent } from '../../app/tasks/taskcontainer/taskcontainer.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { PaginationService } from '../../app/pagination/pagination.service';
-
 import {
   faRightFromBracket,
   faTrashAlt,
 } from '@fortawesome/free-solid-svg-icons';
-import { UserService } from '../../service/user.service';
-import { TaskService } from '../../app/tasks/taskService/task.service';
+import { UserService } from '../../sharedservices/user.service';
+import { TaskService } from '../../tasks/taskService/task.service';
+import { PaginationService } from '../../pagination/pagination.service';
+import { TaskcontainerComponent } from '../../tasks/taskcontainer/taskcontainer.component';
 
 @Component({
   selector: 'app-dashboard',
