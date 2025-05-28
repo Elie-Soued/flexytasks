@@ -20,9 +20,6 @@ input[disabled]{
 background-color: white;
 }
 
-.iconColor{
-  color:black
-}
 
 
 
@@ -32,7 +29,5 @@ background-color: white;
 
   }
 
-  .iconColor{
-  color:white
-}
+
 }
