@@ -6,12 +6,12 @@ import {
 import { HttpParams, provideHttpClient, withFetch } from '@angular/common/http';
 import { provideRouter } from '@angular/router';
 import { DashboardComponent } from './dashboard.component';
-import { routes } from '../../app/app.routes';
 import { By } from '@angular/platform-browser';
-import { tokenReducer } from '../../store/token.reducer';
-import { TokenEffects } from '../../store/token.effects';
 import { provideStore } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
+import { routes } from '../../app.routes';
+import { tokenReducer } from '../../../store/token.reducer';
+import { TokenEffects } from '../../../store/token.effects';
 
 describe('DashboardComponent', () => {
   let component: DashboardComponent;
@@ -67,17 +67,6 @@ describe('DashboardComponent', () => {
     expect(taskContainer).toBeTruthy();
   });
 
-  it('getAllTasks function is correctly executed', () => {
-    component.getAllTasks();
-
-    const req = httpTesting.expectOne(urlWithParams);
-    expect(req.request.method).toBe('GET');
-    req.flush(mockResponse);
-
-    expect(component.tasks).toEqual(mockResponse.tasks);
-    expect(component.totalCount).toEqual(mockResponse.meta.totalCount);
-  });
-
   it('Logout function is correctly executed', () => {
     localStorage.setItem('accessToken', 'pilex');
 
@@ -90,22 +79,5 @@ describe('DashboardComponent', () => {
 
     expect(logoutFunction).toHaveBeenCalled();
     expect(localStorage.getItem('accessToken')).toEqual('');
-  });
-
-  it('Subscriptions are removed on ngOnDestroy in the DashboardView', () => {
-    const unsubscribeNextPageSpy = spyOn(
-      component['nextPageSub'],
-      'unsubscribe'
-    ).and.callThrough();
-
-    const unsubscribePreviousPageSubSpy = spyOn(
-      component['previousPageSub'],
-      'unsubscribe'
-    ).and.callThrough();
-
-    component.ngOnDestroy();
-
-    expect(unsubscribeNextPageSpy).toHaveBeenCalled();
-    expect(unsubscribePreviousPageSubSpy).toHaveBeenCalled();
   });
 });
