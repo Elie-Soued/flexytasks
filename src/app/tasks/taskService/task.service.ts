@@ -1,9 +1,9 @@
 import { Injectable, signal } from '@angular/core';
-import { type task } from '../type';
-import { PaginationService } from './pagination.service';
+import { type task } from '../../../type';
 import { HttpClient } from '@angular/common/http';
-import { TokenService } from './token.service';
-import { environment } from '../environments/environment';
+import { environment } from '../../../environments/environment';
+import { TokenService } from '../../../service/token.service';
+import { PaginationService } from '../../pagination/pagination.service';
 
 type updatedTask = {
   updatedTask: string;

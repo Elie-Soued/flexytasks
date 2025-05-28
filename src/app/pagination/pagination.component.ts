@@ -1,5 +1,5 @@
 import { Component, effect, Injector } from '@angular/core';
-import { PaginationService } from '../../service/pagination.service';
+import { PaginationService } from './pagination.service';
 
 @Component({
   selector: 'app-pagination',

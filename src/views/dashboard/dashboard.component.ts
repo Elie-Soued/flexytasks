@@ -1,18 +1,19 @@
 import { Component, effect, inject, Injector } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { TaskcontainerComponent } from '../../components/taskcontainer/taskcontainer.component';
+import { TaskcontainerComponent } from '../../app/tasks/taskcontainer/taskcontainer.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { PaginationService } from '../../service/pagination.service';
-import { TaskService } from '../../service/task.service';
+import { PaginationService } from '../../app/pagination/pagination.service';
+
 import {
   faRightFromBracket,
   faTrashAlt,
 } from '@fortawesome/free-solid-svg-icons';
 import { UserService } from '../../service/user.service';
+import { TaskService } from '../../app/tasks/taskService/task.service';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [TaskcontainerComponent, FormsModule, FontAwesomeModule],
+  imports: [FormsModule, FontAwesomeModule, TaskcontainerComponent],
   templateUrl: './dashboard.component.html',
   providers: [],
   styleUrl: './dashboard.component.css',

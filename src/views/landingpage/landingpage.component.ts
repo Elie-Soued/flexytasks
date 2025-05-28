@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { QueryService } from '../../service/query.service';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { TokenService } from '../../service/token.service';

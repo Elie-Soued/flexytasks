@@ -1,11 +1,12 @@
 import { Component, effect, inject, Injector, Input } from '@angular/core';
 import { TaskComponent } from '../task/task.component';
-import { PaginationComponent } from '../../components/pagination/pagination.component';
-import { PaginationService } from '../../service/pagination.service';
 import { FormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faPlus, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
-import { TaskService } from '../../service/task.service';
+import { PaginationComponent } from '../../pagination/pagination.component';
+
+import { PaginationService } from '../../pagination/pagination.service';
+import { TaskService } from '../taskService/task.service';
 
 @Component({
   selector: 'app-taskcontainer',

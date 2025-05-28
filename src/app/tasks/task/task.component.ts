@@ -1,9 +1,10 @@
 import { Component, Input, effect, inject, Injector } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { PaginationService } from '../../service/pagination.service';
-import { TaskService } from '../../service/task.service';
-import { type task } from '../../type';
+import { PaginationService } from '../../pagination/pagination.service';
+
+import { type task } from '../../../type';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+
 import {
   faTrash,
   faEdit,
@@ -12,6 +13,7 @@ import {
   faStrikethrough,
   faBroom,
 } from '@fortawesome/free-solid-svg-icons';
+import { TaskService } from '../taskService/task.service';
 
 @Component({
   selector: 'app-task',
