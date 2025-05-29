@@ -21,4 +21,8 @@ export class TokenService {
     });
     return token;
   }
+
+  clearTokenFromURL(): void {
+    window.history.replaceState({}, document.title, '/resetpassword');
+  }
 }

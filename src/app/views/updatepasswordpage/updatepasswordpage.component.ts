@@ -27,7 +27,7 @@ export class UpdatepasswordpageComponent implements OnInit {
     const params = new URLSearchParams(window.location.search);
     if (params.get('token')) {
       this.tokenService.setToken(params.get('token')!);
-      window.history.replaceState({}, document.title, '/resetpassword');
+      this.tokenService.clearTokenFromURL();
     }
   }
 
