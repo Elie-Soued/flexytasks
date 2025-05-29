@@ -32,6 +32,8 @@ describe('TaskcontainerComponent', () => {
     taskService = jasmine.createSpyObj('TaskService', [
       'deleteAllTasks, addTask',
       'tasks',
+      'getAllTasks',
+      'updateTask',
     ]);
     await TestBed.configureTestingModule({
       imports: [TaskcontainerComponent, TaskComponent],
@@ -70,17 +72,6 @@ describe('TaskcontainerComponent', () => {
     expect(component.newTask).toEqual("S'il arrive qu'un Anglais");
     expect(addTaskSpy).toHaveBeenCalled();
   });
-
-  // it('update task is correctly executed in taskContainer', () => {
-  //   const updateTask = spyOn(component, 'updateTask');
-  //   const TaskComponenInstance = fixture.debugElement.query(
-  //     By.directive(TaskComponent)
-  //   );
-  //   TaskComponenInstance.componentInstance.removeTask.emit(tasksAfterDeletion);
-  //   expect(updateTask).toHaveBeenCalled();
-  //   TaskComponenInstance.componentInstance.editTask.emit(tasksAfterUpdate);
-  //   expect(updateTask).toHaveBeenCalled();
-  // });
 
   it('Pagination component is rendered correctly', () => {
     component.totalCount = 10;

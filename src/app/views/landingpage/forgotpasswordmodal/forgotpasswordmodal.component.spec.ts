@@ -100,83 +100,83 @@ describe('ForgotPasswordModalComponent', () => {
     expect(closeModalSpy).toHaveBeenCalled();
   });
 
-  // it('forgotpassword is executed correctly', async () => {
-  //   const mockResponse = {
-  //     code: 200,
-  //     success:
-  //       'Please check your inbox (and maybe also your spam). We sent you a link to reset your password :)',
-  //   };
-  //   queryService.post.and.returnValue(of(mockResponse));
+  it('forgotpassword is executed correctly', async () => {
+    const mockResponse = {
+      code: 200,
+      success:
+        'Please check your inbox (and maybe also your spam). We sent you a link to reset your password :)',
+    };
+    userService.resetPassword.and.returnValue(of(mockResponse));
 
-  //   const emailInput = fixture.debugElement.query(
-  //     By.css('#email')
-  //   ).nativeElement;
-  //   const usernameInput = fixture.debugElement.query(
-  //     By.css('#username')
-  //   ).nativeElement;
+    const emailInput = fixture.debugElement.query(
+      By.css('#email')
+    ).nativeElement;
+    const usernameInput = fixture.debugElement.query(
+      By.css('#username')
+    ).nativeElement;
 
-  //   const submit = fixture.debugElement.query(By.css('#submit')).nativeElement;
+    const submit = fixture.debugElement.query(By.css('#submit')).nativeElement;
 
-  //   const success = fixture.debugElement.query(
-  //     By.css('#success')
-  //   ).nativeElement;
+    const success = fixture.debugElement.query(
+      By.css('#success')
+    ).nativeElement;
 
-  //   const error = fixture.debugElement.query(
-  //     By.css('#errorMessage')
-  //   ).nativeElement;
+    const error = fixture.debugElement.query(
+      By.css('#errorMessage')
+    ).nativeElement;
 
-  //   emailInput.value = 'pilex@gmail.com';
-  //   emailInput.dispatchEvent(new Event('input'));
-  //   usernameInput.value = 'pilex';
-  //   usernameInput.dispatchEvent(new Event('input'));
-  //   fixture.detectChanges();
-  //   await fixture.whenStable();
+    emailInput.value = 'pilex@gmail.com';
+    emailInput.dispatchEvent(new Event('input'));
+    usernameInput.value = 'pilex';
+    usernameInput.dispatchEvent(new Event('input'));
+    fixture.detectChanges();
+    await fixture.whenStable();
 
-  //   submit.click();
+    submit.click();
 
-  //   fixture.detectChanges();
-  //   await fixture.whenStable();
+    fixture.detectChanges();
+    await fixture.whenStable();
 
-  //   expect(success).toBeTruthy();
-  //   expect(error['hidden']).toBeTruthy();
-  // });
+    expect(success).toBeTruthy();
+    expect(error['hidden']).toBeTruthy();
+  });
 
-  // it('forgotpassword is not executed correctly and returns an error', async () => {
-  //   const mockResponse = {
-  //     code: 404,
-  //     message: 'The email account is wrong',
-  //   };
-  //   queryService.post.and.returnValue(of(mockResponse));
+  it('forgotpassword is not executed correctly and returns an error', async () => {
+    const mockResponse = {
+      code: 404,
+      message: 'The email account is wrong',
+    };
+    userService.resetPassword.and.returnValue(of(mockResponse));
 
-  //   const emailInput = fixture.debugElement.query(
-  //     By.css('#email')
-  //   ).nativeElement;
-  //   const usernameInput = fixture.debugElement.query(
-  //     By.css('#username')
-  //   ).nativeElement;
+    const emailInput = fixture.debugElement.query(
+      By.css('#email')
+    ).nativeElement;
+    const usernameInput = fixture.debugElement.query(
+      By.css('#username')
+    ).nativeElement;
 
-  //   const submit = fixture.debugElement.query(By.css('#submit')).nativeElement;
-  //   const success = fixture.debugElement.query(
-  //     By.css('#success')
-  //   ).nativeElement;
+    const submit = fixture.debugElement.query(By.css('#submit')).nativeElement;
+    const success = fixture.debugElement.query(
+      By.css('#success')
+    ).nativeElement;
 
-  //   const error = fixture.debugElement.query(
-  //     By.css('#errorMessage')
-  //   ).nativeElement;
+    const error = fixture.debugElement.query(
+      By.css('#errorMessage')
+    ).nativeElement;
 
-  //   emailInput.value = 'pilex@gmail.com';
-  //   emailInput.dispatchEvent(new Event('input'));
-  //   usernameInput.value = 'pilex';
-  //   usernameInput.dispatchEvent(new Event('input'));
-  //   fixture.detectChanges();
-  //   await fixture.whenStable();
+    emailInput.value = 'pilex@gmail.com';
+    emailInput.dispatchEvent(new Event('input'));
+    usernameInput.value = 'pilex';
+    usernameInput.dispatchEvent(new Event('input'));
+    fixture.detectChanges();
+    await fixture.whenStable();
 
-  //   submit.click();
+    submit.click();
 
-  //   fixture.detectChanges();
-  //   await fixture.whenStable();
+    fixture.detectChanges();
+    await fixture.whenStable();
 
-  //   expect(error).toBeTruthy();
-  //   expect(success['hidden']).toBeTruthy();
-  // });
+    expect(error).toBeTruthy();
+    expect(success['hidden']).toBeTruthy();
+  });
 });

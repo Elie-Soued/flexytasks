@@ -1,182 +1,178 @@
-// import { ComponentFixture, TestBed } from '@angular/core/testing';
-// import { ResetpasswordpageComponent } from './resetpasswordpage.component';
-// import { provideHttpClientTesting } from '@angular/common/http/testing';
-// import { FormsModule } from '@angular/forms';
-// import { provideHttpClient, withFetch } from '@angular/common/http';
-// import { provideStore } from '@ngrx/store';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { FormsModule } from '@angular/forms';
+import { provideHttpClient, withFetch } from '@angular/common/http';
+import { provideStore } from '@ngrx/store';
+import { By } from '@angular/platform-browser';
+import { Router } from '@angular/router';
+import { TokenService } from '../../sharedservices/token.service';
+import { of } from 'rxjs';
+import { tokenReducer } from '../../../store/token.reducer';
+import { UpdatepasswordpageComponent } from './updatepasswordpage.component';
+import { UserService } from '../../sharedservices/user.service';
 
-// import { By } from '@angular/platform-browser';
-// import { Router } from '@angular/router';
-// import { TokenService } from '../../sharedservices/token.service';
-// import { of } from 'rxjs';
-// import { environment } from '../../../environments/environment.prod';
-// import { tokenReducer } from '../../../store/token.reducer';
+describe('UpdatepasswordpageComponent', () => {
+  let component: UpdatepasswordpageComponent;
+  let fixture: ComponentFixture<UpdatepasswordpageComponent>;
 
-// describe('ResetpasswordpageComponent', () => {
-//   let component: ResetpasswordpageComponent;
-//   let fixture: ComponentFixture<ResetpasswordpageComponent>;
-//   let queryService: jasmine.SpyObj<QueryService>;
-//   let routerSpy: jasmine.SpyObj<Router>;
-//   let tokenService: jasmine.SpyObj<TokenService>;
+  let routerSpy: jasmine.SpyObj<Router>;
+  let tokenService: jasmine.SpyObj<TokenService>;
+  let userService: jasmine.SpyObj<UserService>;
 
-//   beforeEach(async () => {
-//     queryService = jasmine.createSpyObj('QueryService', ['post']);
-//     tokenService = jasmine.createSpyObj('TokenService', [
-//       'getToken',
-//       'setToken',
-//     ]);
-//     routerSpy = jasmine.createSpyObj('Router', ['navigate']);
+  beforeEach(async () => {
+    tokenService = jasmine.createSpyObj('TokenService', [
+      'getToken',
+      'setToken',
+    ]);
+    routerSpy = jasmine.createSpyObj('Router', ['navigate']);
 
-//     await TestBed.configureTestingModule({
-//       imports: [FormsModule, ResetpasswordpageComponent],
-//       providers: [
-//         provideHttpClient(withFetch()),
-//         provideHttpClientTesting(),
-//         provideStore({ token: tokenReducer }),
-//         { provide: QueryService, useValue: queryService },
-//         { provide: TokenService, useValue: tokenService },
-//         { provide: Router, useValue: routerSpy },
-//       ],
-//     }).compileComponents();
+    userService = jasmine.createSpyObj('UserService', ['updatePassword']);
 
-//     fixture = TestBed.createComponent(ResetpasswordpageComponent);
+    await TestBed.configureTestingModule({
+      imports: [FormsModule, UpdatepasswordpageComponent],
+      providers: [
+        provideHttpClient(withFetch()),
+        provideHttpClientTesting(),
+        provideStore({ token: tokenReducer }),
 
-//     component = fixture.componentInstance;
-//     fixture.detectChanges();
-//   });
+        { provide: TokenService, useValue: tokenService },
+        { provide: Router, useValue: routerSpy },
+        { provide: UserService, useValue: userService },
+      ],
+    }).compileComponents();
 
-//   it('resetpassword view is correctly rendered', () => {
-//     const updatePasswordBtn = fixture.debugElement.query(
-//       By.css('#submit')
-//     ).nativeElement;
-//     const passwordInput = fixture.debugElement.query(
-//       By.css('#passwordInput')
-//     ).nativeElement;
-//     const confirmedpasswordInput = fixture.debugElement.query(
-//       By.css('#confirmedpasswordInput')
-//     ).nativeElement;
+    fixture = TestBed.createComponent(UpdatepasswordpageComponent);
 
-//     expect(updatePasswordBtn).toBeTruthy();
-//     expect(passwordInput).toBeTruthy();
-//     expect(confirmedpasswordInput).toBeTruthy();
-//   });
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
 
-//   it('Submit button is disabled and enabled correctly', async () => {
-//     const updatePasswordBtn = fixture.debugElement.query(
-//       By.css('#submit')
-//     ).nativeElement;
-//     const passwordInput = fixture.debugElement.query(
-//       By.css('#passwordInput')
-//     ).nativeElement;
-//     const confirmedpasswordInput = fixture.debugElement.query(
-//       By.css('#confirmedpasswordInput')
-//     ).nativeElement;
+  it('updatepasswordPage view is correctly rendered', () => {
+    const updatePasswordBtn = fixture.debugElement.query(
+      By.css('#submit')
+    ).nativeElement;
+    const passwordInput = fixture.debugElement.query(
+      By.css('#passwordInput')
+    ).nativeElement;
+    const confirmedpasswordInput = fixture.debugElement.query(
+      By.css('#confirmedpasswordInput')
+    ).nativeElement;
 
-//     // Submit button is initially disabled.
-//     expect(updatePasswordBtn.disabled).toBeTruthy();
+    expect(updatePasswordBtn).toBeTruthy();
+    expect(passwordInput).toBeTruthy();
+    expect(confirmedpasswordInput).toBeTruthy();
+  });
 
-//     passwordInput.value = 'pilex';
-//     passwordInput.dispatchEvent(new Event('input'));
-//     confirmedpasswordInput.value = 'pilex';
-//     confirmedpasswordInput.dispatchEvent(new Event('input'));
-//     fixture.detectChanges();
-//     await fixture.whenStable();
+  it('Submit button is disabled and enabled correctly', async () => {
+    const updatePasswordBtn = fixture.debugElement.query(
+      By.css('#submit')
+    ).nativeElement;
+    const passwordInput = fixture.debugElement.query(
+      By.css('#passwordInput')
+    ).nativeElement;
+    const confirmedpasswordInput = fixture.debugElement.query(
+      By.css('#confirmedpasswordInput')
+    ).nativeElement;
 
-//     // if the same value for password and confirmed password is entered, the submit button should be enabled
-//     expect(updatePasswordBtn.disabled).toBeFalsy();
+    // Submit button is initially disabled.
+    expect(updatePasswordBtn.disabled).toBeTruthy();
 
-//     passwordInput.value = 'pile';
-//     passwordInput.dispatchEvent(new Event('input'));
-//     fixture.detectChanges();
-//     await fixture.whenStable();
+    passwordInput.value = 'pilex';
+    passwordInput.dispatchEvent(new Event('input'));
+    confirmedpasswordInput.value = 'pilex';
+    confirmedpasswordInput.dispatchEvent(new Event('input'));
+    fixture.detectChanges();
+    await fixture.whenStable();
 
-//     // if the value of confirmedpassword and password is not the same, the submit button should be disabled
-//     expect(updatePasswordBtn.disabled).toBeTruthy();
+    // if the same value for password and confirmed password is entered, the submit button should be enabled
+    expect(updatePasswordBtn.disabled).toBeFalsy();
 
-//     passwordInput.value = '';
-//     passwordInput.dispatchEvent(new Event('input'));
-//     confirmedpasswordInput.value = '';
-//     confirmedpasswordInput.dispatchEvent(new Event('input'));
-//     fixture.detectChanges();
-//     await fixture.whenStable();
+    passwordInput.value = 'pile';
+    passwordInput.dispatchEvent(new Event('input'));
+    fixture.detectChanges();
+    await fixture.whenStable();
 
-//     // If password and confirmedpassword are cleared, then the submit button should be disabled
-//     expect(updatePasswordBtn.disabled).toBeTruthy();
-//   });
+    // if the value of confirmedpassword and password is not the same, the submit button should be disabled
+    expect(updatePasswordBtn.disabled).toBeTruthy();
 
-//   it('updatePassword function is correctly executed', async () => {
-//     const mockToken = 'myAccessToken';
-//     tokenService.getToken.and.returnValue(mockToken);
-//     queryService.post.and.callThrough();
+    passwordInput.value = '';
+    passwordInput.dispatchEvent(new Event('input'));
+    confirmedpasswordInput.value = '';
+    confirmedpasswordInput.dispatchEvent(new Event('input'));
+    fixture.detectChanges();
+    await fixture.whenStable();
 
-//     const updatePasswordBtn = fixture.debugElement.query(
-//       By.css('#submit')
-//     ).nativeElement;
-//     const passwordInput = fixture.debugElement.query(
-//       By.css('#passwordInput')
-//     ).nativeElement;
-//     const confirmedpasswordInput = fixture.debugElement.query(
-//       By.css('#confirmedpasswordInput')
-//     ).nativeElement;
+    // If password and confirmedpassword are cleared, then the submit button should be disabled
+    expect(updatePasswordBtn.disabled).toBeTruthy();
+  });
 
-//     passwordInput.value = 'pilex';
-//     passwordInput.dispatchEvent(new Event('input'));
-//     confirmedpasswordInput.value = 'pilex';
-//     confirmedpasswordInput.dispatchEvent(new Event('input'));
+  it('updatePassword function is correctly executed', async () => {
+    const updatePasswordMock = spyOn(component, 'updatePassword');
+    const updatePasswordBtn = fixture.debugElement.query(
+      By.css('#submit')
+    ).nativeElement;
+    const passwordInput = fixture.debugElement.query(
+      By.css('#passwordInput')
+    ).nativeElement;
+    const confirmedpasswordInput = fixture.debugElement.query(
+      By.css('#confirmedpasswordInput')
+    ).nativeElement;
 
-//     fixture.detectChanges();
-//     await fixture.whenStable();
+    passwordInput.value = 'pilex';
+    passwordInput.dispatchEvent(new Event('input'));
+    confirmedpasswordInput.value = 'pilex';
+    confirmedpasswordInput.dispatchEvent(new Event('input'));
 
-//     updatePasswordBtn.click();
+    fixture.detectChanges();
+    await fixture.whenStable();
 
-//     expect(queryService.post).toHaveBeenCalledWith(`users/updatepassword`, {
-//       updatedpassword: 'pilex',
-//     });
-//   });
+    updatePasswordBtn.click();
 
-//   it('redirection to landing page when call is successfully executed', async () => {
-//     const mockToken = 'myAccessToken';
-//     const mockResponse = { code: 200, success: 'password has been updated' };
-//     tokenService.getToken.and.returnValue(mockToken);
-//     queryService.post.and.returnValue(of(mockResponse));
+    expect(updatePasswordMock).toHaveBeenCalled();
+  });
 
-//     const updatePasswordBtn = fixture.debugElement.query(
-//       By.css('#submit')
-//     ).nativeElement;
-//     const passwordInput = fixture.debugElement.query(
-//       By.css('#passwordInput')
-//     ).nativeElement;
-//     const confirmedpasswordInput = fixture.debugElement.query(
-//       By.css('#confirmedpasswordInput')
-//     ).nativeElement;
+  it('redirection to landing page when call is successfully executed', async () => {
+    const mockResponse = { code: 200, success: 'password has been updated' };
 
-//     passwordInput.value = 'pilex';
-//     passwordInput.dispatchEvent(new Event('input'));
-//     confirmedpasswordInput.value = 'pilex';
-//     confirmedpasswordInput.dispatchEvent(new Event('input'));
+    userService.updatePassword.and.returnValue(of(mockResponse));
 
-//     fixture.detectChanges();
-//     await fixture.whenStable();
+    const updatePasswordBtn = fixture.debugElement.query(
+      By.css('#submit')
+    ).nativeElement;
+    const passwordInput = fixture.debugElement.query(
+      By.css('#passwordInput')
+    ).nativeElement;
+    const confirmedpasswordInput = fixture.debugElement.query(
+      By.css('#confirmedpasswordInput')
+    ).nativeElement;
 
-//     updatePasswordBtn.click();
+    passwordInput.value = 'pilex';
+    passwordInput.dispatchEvent(new Event('input'));
+    confirmedpasswordInput.value = 'pilex';
+    confirmedpasswordInput.dispatchEvent(new Event('input'));
 
-//     fixture.detectChanges();
-//     await fixture.whenStable();
+    fixture.detectChanges();
+    await fixture.whenStable();
 
-//     expect(routerSpy.navigate).toHaveBeenCalledWith(['/']);
-//   });
+    updatePasswordBtn.click();
 
-//   it('error message is displayed when error is received from the backend', async () => {
-//     const errorMessage = fixture.debugElement.query(
-//       By.css('#errorMessage')
-//     ).nativeElement;
+    fixture.detectChanges();
+    await fixture.whenStable();
 
-//     component.error = 'some error';
-//     fixture.detectChanges();
-//     expect(errorMessage['hidden']).toBeFalsy();
+    expect(routerSpy.navigate).toHaveBeenCalledWith(['/']);
+  });
 
-//     component.error = '';
-//     fixture.detectChanges();
-//     expect(errorMessage['hidden']).toBeTruthy();
-//   });
-// });
+  it('error message is displayed when error is received from the backend', async () => {
+    const errorMessage = fixture.debugElement.query(
+      By.css('#errorMessage')
+    ).nativeElement;
+
+    component.error = 'some error';
+    fixture.detectChanges();
+    expect(errorMessage['hidden']).toBeFalsy();
+
+    component.error = '';
+    fixture.detectChanges();
+    expect(errorMessage['hidden']).toBeTruthy();
+  });
+});

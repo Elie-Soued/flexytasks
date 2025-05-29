@@ -81,15 +81,15 @@ describe('TaskComponent', () => {
     expect(editFunction).toHaveBeenCalled();
   });
 
-  // it('Update task is correctly executed in task', () => {
-  //   const enableButton = fixture.debugElement.query(By.css('#enableButton'));
-  //   enableButton.nativeElement.click();
-  //   fixture.detectChanges();
-  //   const updateButton = fixture.debugElement.query(By.css('#updateButton'));
-  //   const updateFunction = spyOn(component, 'updateTask');
-  //   updateButton.nativeElement.click();
-  //   expect(updateFunction).toHaveBeenCalled();
-  // });
+  it('Update task is correctly executed in task', () => {
+    const enableButton = fixture.debugElement.query(By.css('#enableButton'));
+    enableButton.nativeElement.click();
+    fixture.detectChanges();
+    const updateButton = fixture.debugElement.query(By.css('#updateButton'));
+    const updateFunction = spyOn(component, 'editTask');
+    updateButton.nativeElement.click();
+    expect(updateFunction).toHaveBeenCalled();
+  });
 
   it('Disable task is correctly executed', () => {
     const enableButton = fixture.debugElement.query(By.css('#enableButton'));
