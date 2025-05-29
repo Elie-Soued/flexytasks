@@ -1,4 +1,4 @@
-import { Component, effect, inject, Injector } from '@angular/core';
+import { Component, effect, inject, Injector, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {
@@ -17,7 +17,7 @@ import { TaskcontainerComponent } from '../../tasks/taskcontainer/taskcontainer.
   providers: [],
   styleUrl: './dashboard.component.css',
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnInit {
   logoutIcon = faRightFromBracket;
   deleteAll = faTrashAlt;
   private injector = inject(Injector);
@@ -28,7 +28,7 @@ export class DashboardComponent {
     private userService: UserService
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     effect(
       () => {
         if (this.paginationService.offset() !== null) {

@@ -1,4 +1,4 @@
-import { Component, effect, Injector } from '@angular/core';
+import { Component, effect, Injector, OnInit } from '@angular/core';
 import { PaginationService } from './pagination.service';
 
 @Component({
@@ -7,7 +7,7 @@ import { PaginationService } from './pagination.service';
   templateUrl: './pagination.component.html',
   providers: [],
 })
-export class PaginationComponent {
+export class PaginationComponent implements OnInit {
   limit = 0;
   offset = 0;
   totalCount = 0;
@@ -17,7 +17,7 @@ export class PaginationComponent {
     private injector: Injector
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     effect(
       () => {
         this.offset = this.paginationService.offset();

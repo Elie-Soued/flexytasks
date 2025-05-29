@@ -4,8 +4,10 @@ import { Router } from '@angular/router';
 import { TokenService } from './token.service';
 import { BASE_URL } from '../app.config';
 
-type loginResponse = {
-  accessToken: string;
+export type loginResponse = {
+  code: number;
+  accessToken?: string | undefined;
+  message?: string;
 };
 
 type forgotPasswordResponse = {
@@ -14,7 +16,7 @@ type forgotPasswordResponse = {
   message?: string;
 };
 
-type updatePasswordResponse = {
+export type updatePasswordResponse = {
   code: number;
   success?: string;
   message?: string;

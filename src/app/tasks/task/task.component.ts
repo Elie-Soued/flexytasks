@@ -1,4 +1,11 @@
-import { Component, Input, effect, inject, Injector } from '@angular/core';
+import {
+  Component,
+  Input,
+  effect,
+  inject,
+  Injector,
+  OnInit,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { PaginationService } from '../../pagination/pagination.service';
 import { type task } from '../taskService/task.service';
@@ -20,7 +27,7 @@ import { TaskService } from '../taskService/task.service';
   templateUrl: './task.component.html',
   styleUrl: './task.component.css',
 })
-export class TaskComponent {
+export class TaskComponent implements OnInit {
   @Input() task!: task;
   delete = faTrash;
   edit = faEdit;
@@ -42,7 +49,7 @@ export class TaskComponent {
     private taskService: TaskService
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     effect(
       () => {
         this.offset = this.paginationService.offset();

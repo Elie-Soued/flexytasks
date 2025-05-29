@@ -1,4 +1,11 @@
-import { Component, effect, inject, Injector, Input } from '@angular/core';
+import {
+  Component,
+  effect,
+  inject,
+  Injector,
+  Input,
+  OnInit,
+} from '@angular/core';
 import { TaskComponent } from '../task/task.component';
 import { FormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -13,7 +20,7 @@ import { TaskService } from '../taskService/task.service';
   imports: [TaskComponent, PaginationComponent, FormsModule, FontAwesomeModule],
   templateUrl: './taskcontainer.component.html',
 })
-export class TaskcontainerComponent {
+export class TaskcontainerComponent implements OnInit {
   token = '';
   newTask = '';
   add = faPlus;
@@ -29,7 +36,6 @@ export class TaskcontainerComponent {
 
   private injector = inject(Injector);
 
-  //Pagination related properties
   offset = 0;
   limit = 0;
   totalCount = 0;
@@ -39,7 +45,7 @@ export class TaskcontainerComponent {
     private taskService: TaskService
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     effect(
       () => {
         this.offset = this.paginationService.offset();

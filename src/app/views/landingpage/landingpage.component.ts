@@ -4,12 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { TokenService } from '../../sharedservices/token.service';
 import { ForgotPasswordModalComponent } from './forgotpasswordmodal/forgotpasswordmodal.component';
 import { UserService } from '../../sharedservices/user.service';
-
-interface loginResponse {
-  code: number;
-  accessToken: string | undefined;
-  message: string | undefined;
-}
+import { type loginResponse } from '../../sharedservices/user.service';
 
 @Component({
   selector: 'app-landingpage',
@@ -32,7 +27,7 @@ export class LandingpageComponent {
 
   login(): void {
     this.userService.login(this.username, this.password).subscribe({
-      next: (response: any) => {
+      next: (response: loginResponse) => {
         const { accessToken, message } = response;
         if (accessToken) {
           this.router.navigate(['/dashboard']);
@@ -47,11 +42,11 @@ export class LandingpageComponent {
     });
   }
 
-  showModal() {
+  showModal(): void {
     this.forgotPassword = true;
   }
 
-  closeModal() {
+  closeModal(): void {
     this.forgotPassword = false;
   }
 }
