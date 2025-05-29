@@ -41,7 +41,7 @@ export class TaskService {
             authorization: this.tokenService.getToken(),
           },
 
-          params: this.paginationService.prepareParams(),
+          params: this.paginationService.addPaginationParams(),
         }
       )
       .subscribe({
@@ -69,7 +69,7 @@ export class TaskService {
             authorization: this.tokenService.getToken(),
           },
 
-          params: this.paginationService.prepareParams(),
+          params: this.paginationService.addPaginationParams(),
         }
       )
       .subscribe({
@@ -90,7 +90,7 @@ export class TaskService {
           authorization: this.tokenService.getToken(),
         },
 
-        params: this.paginationService.prepareParams(),
+        params: this.paginationService.addPaginationParams(),
       })
       .subscribe({
         next: (response: tasksResponse) => {
@@ -113,7 +113,7 @@ export class TaskService {
             authorization: this.tokenService.getToken(),
           },
 
-          params: this.paginationService.prepareParams(),
+          params: this.paginationService.addPaginationParams(),
         }
       )
       .subscribe({
@@ -141,7 +141,7 @@ export class TaskService {
             authorization: this.tokenService.getToken(),
           },
 
-          params: this.paginationService.prepareParams(),
+          params: this.paginationService.addPaginationParams(),
         }
       )
       .subscribe({
@@ -167,7 +167,7 @@ export class TaskService {
             authorization: this.tokenService.getToken(),
           },
 
-          params: this.paginationService.prepareParams(),
+          params: this.paginationService.addPaginationParams(),
         }
       )
       .subscribe({

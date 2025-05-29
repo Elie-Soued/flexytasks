@@ -19,7 +19,7 @@ export class PaginationService {
     this.totalCount.set(value);
   }
 
-  prepareParams(): HttpParams {
+  addPaginationParams(): HttpParams {
     return new HttpParams()
       .set('offset', this.offset().toString())
       .set('limit', this.limit().toString());
