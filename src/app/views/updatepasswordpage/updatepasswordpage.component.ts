@@ -3,16 +3,16 @@ import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { TokenService } from '../../sharedservices/token.service';
 import { UserService } from '../../sharedservices/user.service';
+import { type updatePasswordResponse } from '../../sharedservices/user.service';
 
 @Component({
   selector: 'app-resetpassword',
   imports: [FormsModule],
-  templateUrl: './resetpasswordpage.component.html',
-  styleUrl: './resetpasswordpage.component.css',
+  templateUrl: './updatepasswordpage.component.html',
+  styleUrl: './updatepasswordpage.component.css',
   providers: [],
 })
-export class ResetpasswordpageComponent implements OnInit {
-  token: string = '';
+export class UpdatepasswordpageComponent implements OnInit {
   password = '';
   confirmedpassword = '';
   error: string | undefined = '';
@@ -31,9 +31,9 @@ export class ResetpasswordpageComponent implements OnInit {
     }
   }
 
-  updatePassword() {
+  updatePassword(): void {
     this.userService.updatePassword(this.confirmedpassword).subscribe({
-      next: (response: any) => {
+      next: (response: updatePasswordResponse) => {
         const { code, message } = response;
 
         if (code === 200) {
