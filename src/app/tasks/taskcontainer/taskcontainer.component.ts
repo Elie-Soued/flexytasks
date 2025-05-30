@@ -22,7 +22,15 @@ export class TaskcontainerComponent implements OnInit {
   totalCount = 0;
 
   newTask = '';
-  tasks = [{}];
+
+  tasks = [
+    {
+      id: 0,
+      content: '',
+      checked: false,
+      userID: 0,
+    },
+  ];
 
   private injector = inject(Injector);
 
