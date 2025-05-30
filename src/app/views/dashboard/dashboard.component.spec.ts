@@ -7,11 +7,8 @@ import { provideHttpClient, withFetch } from '@angular/common/http';
 import { provideRouter } from '@angular/router';
 import { DashboardComponent } from './dashboard.component';
 import { By } from '@angular/platform-browser';
-import { provideStore } from '@ngrx/store';
-import { provideEffects } from '@ngrx/effects';
+
 import { routes } from '../../app.routes';
-import { tokenReducer } from '../../../store/token.reducer';
-import { TokenEffects } from '../../../store/token.effects';
 
 describe('DashboardComponent', () => {
   let component: DashboardComponent;
@@ -25,8 +22,6 @@ describe('DashboardComponent', () => {
         provideHttpClient(withFetch()),
         provideRouter(routes),
         provideHttpClientTesting(),
-        provideStore({ token: tokenReducer }),
-        provideEffects([TokenEffects]),
       ],
     }).compileComponents();
 
