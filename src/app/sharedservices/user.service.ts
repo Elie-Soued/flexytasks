@@ -10,7 +10,7 @@ export type loginResponse = {
   message?: string;
 };
 
-type forgotPasswordResponse = {
+export type forgotPasswordResponse = {
   code: number;
   success?: string;
   message?: string;

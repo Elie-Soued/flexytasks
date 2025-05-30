@@ -1,20 +1,14 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { provideHttpClientTesting } from '@angular/common/http/testing';
-import { FormsModule } from '@angular/forms';
-import { provideHttpClient, withFetch } from '@angular/common/http';
-import { provideStore } from '@ngrx/store';
 import { By } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { TokenService } from '../../sharedservices/token.service';
 import { of } from 'rxjs';
-import { tokenReducer } from '../../../store/token.reducer';
 import { UpdatepasswordpageComponent } from './updatepasswordpage.component';
 import { UserService } from '../../sharedservices/user.service';
+import { TokenService } from '../../sharedservices/token.service';
 
 describe('UpdatepasswordpageComponent', () => {
   let component: UpdatepasswordpageComponent;
   let fixture: ComponentFixture<UpdatepasswordpageComponent>;
-
   let routerSpy: jasmine.SpyObj<Router>;
   let tokenService: jasmine.SpyObj<TokenService>;
   let userService: jasmine.SpyObj<UserService>;
@@ -29,12 +23,8 @@ describe('UpdatepasswordpageComponent', () => {
     userService = jasmine.createSpyObj('UserService', ['updatePassword']);
 
     await TestBed.configureTestingModule({
-      imports: [FormsModule, UpdatepasswordpageComponent],
+      imports: [UpdatepasswordpageComponent],
       providers: [
-        provideHttpClient(withFetch()),
-        provideHttpClientTesting(),
-        provideStore({ token: tokenReducer }),
-
         { provide: TokenService, useValue: tokenService },
         { provide: Router, useValue: routerSpy },
         { provide: UserService, useValue: userService },

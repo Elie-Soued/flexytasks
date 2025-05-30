@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { UserService } from '../../../sharedservices/user.service';
+import { type forgotPasswordResponse } from '../../../sharedservices/user.service';
 
 @Component({
   selector: 'app-forgot-password-modal',
@@ -26,7 +27,7 @@ export class ForgotPasswordModalComponent {
 
   resetPassword() {
     this.userService.resetPassword(this.username, this.email).subscribe({
-      next: (response: any) => {
+      next: (response: forgotPasswordResponse) => {
         if (response.code === 200) {
           this.success = response.success;
         } else {

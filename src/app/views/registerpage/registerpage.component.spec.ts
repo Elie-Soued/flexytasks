@@ -1,15 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RegisterpageComponent } from './registerpage.component';
 import { By } from '@angular/platform-browser';
-import { provideHttpClient, withFetch } from '@angular/common/http';
-import { provideRouter, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { of } from 'rxjs';
-import { routes } from '../../app.routes';
 import { UserService } from '../../sharedservices/user.service';
-import { provideStore } from '@ngrx/store';
-import { provideEffects } from '@ngrx/effects';
-import { tokenReducer } from '../../../store/token.reducer';
-import { TokenEffects } from '../../../store/token.effects';
 
 describe('RegisterpageComponent', () => {
   let component: RegisterpageComponent;
@@ -24,13 +18,8 @@ describe('RegisterpageComponent', () => {
     await TestBed.configureTestingModule({
       imports: [RegisterpageComponent],
       providers: [
-        provideHttpClient(withFetch()),
-        provideRouter(routes),
-        provideStore({ token: tokenReducer }),
-        provideEffects([TokenEffects]),
-
         { provide: Router, useValue: routerSpy },
-        { provide: UserService, userValue: userService },
+        { provide: UserService, useValue: userService },
       ],
     }).compileComponents();
 
@@ -113,6 +102,7 @@ describe('RegisterpageComponent', () => {
     await fixture.whenStable();
     expect(errorMessage.hidden).toBeFalsy();
   });
+
   it('If email has not the correct format, submit button should remain disabled', async () => {
     fixture.detectChanges();
     await fixture.whenStable();
@@ -163,44 +153,42 @@ describe('RegisterpageComponent', () => {
     expect(submitButton.disabled).toBeFalsy();
   });
 
-  // it('If all correct data are entered and user does not exist previously, user should be redirected to the login page', async () => {
-  //   const mockResponse = { message: 'User registered successfully' };
+  it('If all correct data are entered and user does not exist previously, user should be redirected to the login page', async () => {
+    userService.register.and.returnValue(of(undefined));
 
-  //   queryService.post.and.returnValue(of(mockResponse));
+    const emailInput = fixture.debugElement.query(
+      By.css('#email')
+    ).nativeElement;
+    const fullnameInput = fixture.debugElement.query(
+      By.css('#fullname')
+    ).nativeElement;
+    const usernameInput = fixture.debugElement.query(
+      By.css('#username')
+    ).nativeElement;
+    const passwordInput = fixture.debugElement.query(
+      By.css('#password')
+    ).nativeElement;
+    const submitButton = fixture.debugElement.query(
+      By.css('#submit')
+    ).nativeElement;
 
-  //   const emailInput = fixture.debugElement.query(
-  //     By.css('#email')
-  //   ).nativeElement;
-  //   const fullnameInput = fixture.debugElement.query(
-  //     By.css('#fullname')
-  //   ).nativeElement;
-  //   const usernameInput = fixture.debugElement.query(
-  //     By.css('#username')
-  //   ).nativeElement;
-  //   const passwordInput = fixture.debugElement.query(
-  //     By.css('#password')
-  //   ).nativeElement;
-  //   const submitButton = fixture.debugElement.query(
-  //     By.css('#submit')
-  //   ).nativeElement;
+    usernameInput.value = 'fooUserName';
+    usernameInput.dispatchEvent(new Event('input'));
+    fullnameInput.value = 'fooFullName';
+    fullnameInput.dispatchEvent(new Event('input'));
+    emailInput.value = 'foo@gmail.com';
+    emailInput.dispatchEvent(new Event('input'));
+    passwordInput.value = 'fooPassword';
+    passwordInput.dispatchEvent(new Event('input'));
 
-  //   usernameInput.value = 'fooUserName';
-  //   usernameInput.dispatchEvent(new Event('input'));
-  //   fullnameInput.value = 'fooFullName';
-  //   fullnameInput.dispatchEvent(new Event('input'));
-  //   emailInput.value = 'foo@gmail.com';
-  //   emailInput.dispatchEvent(new Event('input'));
-  //   passwordInput.value = 'fooPassword';
-  //   passwordInput.dispatchEvent(new Event('input'));
+    fixture.detectChanges();
+    await fixture.whenStable();
 
-  //   fixture.detectChanges();
-  //   await fixture.whenStable();
+    submitButton.click();
 
-  //   submitButton.click();
+    fixture.detectChanges();
+    await fixture.whenStable();
 
-  //   fixture.detectChanges();
-  //   await fixture.whenStable();
-
-  //   expect(routerSpy.navigate).toHaveBeenCalledWith(['']);
-  // });
+    expect(routerSpy.navigate).toHaveBeenCalledWith(['']);
+  });
 });

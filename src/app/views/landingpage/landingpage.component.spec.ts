@@ -1,46 +1,36 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { LandingpageComponent } from './landingpage.component';
-import { provideHttpClient, withFetch } from '@angular/common/http';
-import { provideRouter, Router } from '@angular/router';
-import { provideStore } from '@ngrx/store';
-import { provideEffects } from '@ngrx/effects';
-import { TokenService } from '../../sharedservices/token.service';
+import { Router } from '@angular/router';
 import { of } from 'rxjs';
-import { routes } from '../../app.routes';
-import { tokenReducer } from '../../../store/token.reducer';
-import { TokenEffects } from '../../../store/token.effects';
+import { UserService } from '../../sharedservices/user.service';
+import { TokenService } from '../../sharedservices/token.service';
 
 describe('LandingpageComponent', () => {
   let component: LandingpageComponent;
   let fixture: ComponentFixture<LandingpageComponent>;
-
+  let userService: jasmine.SpyObj<UserService>;
   let routerSpy: jasmine.SpyObj<Router>;
   let tokenService: jasmine.SpyObj<TokenService>;
 
   beforeEach(async () => {
-    tokenService = jasmine.createSpyObj('TokenService', [
-      'getToken',
-      'setToken',
-    ]);
     routerSpy = jasmine.createSpyObj('Router', ['navigate']);
+    userService = jasmine.createSpyObj('UserService', ['login']);
+    tokenService = jasmine.createSpyObj('TokenService', ['setToken']);
 
     await TestBed.configureTestingModule({
-      imports: [FormsModule, LandingpageComponent],
+      imports: [LandingpageComponent],
       providers: [
-        provideHttpClient(withFetch()),
-        provideRouter(routes),
-        provideStore({ token: tokenReducer }),
-        provideEffects([TokenEffects]),
-
-        { provide: TokenService, useValue: tokenService },
         { provide: Router, useValue: routerSpy },
+        { provide: UserService, useValue: userService },
+        { provide: TokenService, useValue: tokenService },
       ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(LandingpageComponent);
+
     component = fixture.componentInstance;
+
     fixture.detectChanges();
   });
   it('Making sure the inputs and button are correctly rendered', () => {
@@ -51,6 +41,7 @@ describe('LandingpageComponent', () => {
     expect(password).toBeTruthy();
     expect(submit).toBeTruthy();
   });
+
   it('Making sure submit button is correctly enabled and disabled', async () => {
     fixture.detectChanges();
     await fixture.whenStable();
@@ -83,6 +74,7 @@ describe('LandingpageComponent', () => {
     await fixture.whenStable();
     expect(submitButton.disabled).toBeFalsy();
   });
+
   it('Display error message in case the backend returns an error', async () => {
     // Error is not showing
     fixture.detectChanges();
@@ -98,35 +90,39 @@ describe('LandingpageComponent', () => {
     await fixture.whenStable();
     expect(errorMessage.hidden).toBeFalsy();
   });
-  // it('Correct redirect after successfull login', async () => {
-  //   const mockToken = 'ouf';
-  //   const mockResponse = { accessToken: 'ouf' };
-  //   tokenService.getToken.and.returnValue(mockToken);
-  //   queryService.post.and.returnValue(of(mockResponse));
 
-  //   const usernameInput = fixture.debugElement.query(
-  //     By.css('#username')
-  //   ).nativeElement;
-  //   const passwordInput = fixture.debugElement.query(
-  //     By.css('#password')
-  //   ).nativeElement;
-  //   const submitButton = fixture.debugElement.query(
-  //     By.css('#submit')
-  //   ).nativeElement;
+  it('Correct redirect after successfull login', async () => {
+    const mockResponse = {
+      code: 200,
+      accessToken: 'ouf',
+      message: 'nice bro',
+    };
 
-  //   usernameInput.value = 'foo';
-  //   usernameInput.dispatchEvent(new Event('input'));
-  //   passwordInput.value = 'bar';
-  //   passwordInput.dispatchEvent(new Event('input'));
+    userService.login.and.returnValue(of(mockResponse));
 
-  //   fixture.detectChanges();
-  //   await fixture.whenStable();
+    const usernameInput = fixture.debugElement.query(
+      By.css('#username')
+    ).nativeElement;
+    const passwordInput = fixture.debugElement.query(
+      By.css('#password')
+    ).nativeElement;
+    const submitButton = fixture.debugElement.query(
+      By.css('#submit')
+    ).nativeElement;
 
-  //   submitButton.click();
+    usernameInput.value = 'foo';
+    usernameInput.dispatchEvent(new Event('input'));
+    passwordInput.value = 'bar';
+    passwordInput.dispatchEvent(new Event('input'));
 
-  //   fixture.detectChanges();
-  //   await fixture.whenStable();
+    fixture.detectChanges();
+    await fixture.whenStable();
 
-  //   expect(routerSpy.navigate).toHaveBeenCalledWith(['/dashboard']);
-  // });
+    submitButton.click();
+
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    expect(routerSpy.navigate).toHaveBeenCalledWith(['/dashboard']);
+  });
 });
