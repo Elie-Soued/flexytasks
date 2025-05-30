@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { type task } from '../taskService/task.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { TaskService } from '../taskService/task.service';
 
 import {
   faTrash,
@@ -11,7 +12,6 @@ import {
   faStrikethrough,
   faBroom,
 } from '@fortawesome/free-solid-svg-icons';
-import { TaskService } from '../taskService/task.service';
 
 @Component({
   selector: 'app-task',
@@ -21,15 +21,16 @@ import { TaskService } from '../taskService/task.service';
 })
 export class TaskComponent {
   @Input() task!: task;
+  checked = false;
+  disabled = true;
+  updatedTask = '';
+  // Icons
   delete = faTrash;
   edit = faEdit;
   check = faCheck;
   undo = faTimes;
   broom = faBroom;
   strikethrough = faStrikethrough;
-  updatedTask = '';
-  checked = false;
-  disabled = true;
 
   constructor(private taskService: TaskService) {}
 

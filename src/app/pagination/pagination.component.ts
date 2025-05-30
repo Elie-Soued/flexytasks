@@ -3,9 +3,7 @@ import { PaginationService } from './pagination.service';
 
 @Component({
   selector: 'app-pagination',
-  imports: [],
   templateUrl: './pagination.component.html',
-  providers: [],
 })
 export class PaginationComponent implements OnInit {
   limit = 0;

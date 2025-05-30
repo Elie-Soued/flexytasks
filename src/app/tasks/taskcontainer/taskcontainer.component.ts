@@ -4,7 +4,6 @@ import { FormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faPlus, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { PaginationComponent } from '../../pagination/pagination.component';
-
 import { PaginationService } from '../../pagination/pagination.service';
 import { TaskService } from '../taskService/task.service';
 
@@ -14,23 +13,18 @@ import { TaskService } from '../taskService/task.service';
   templateUrl: './taskcontainer.component.html',
 })
 export class TaskcontainerComponent implements OnInit {
-  token = '';
-  newTask = '';
+  // Icons
   add = faPlus;
   deleteAllIcon = faTrashAlt;
-  tasks = [
-    {
-      id: 0,
-      content: '',
-      checked: false,
-      userID: 0,
-    },
-  ];
 
-  private injector = inject(Injector);
-
+  //Pagination related
   limit = 0;
   totalCount = 0;
+
+  newTask = '';
+  tasks = [{}];
+
+  private injector = inject(Injector);
 
   constructor(
     private paginationService: PaginationService,
