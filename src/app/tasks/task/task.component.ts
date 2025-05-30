@@ -1,13 +1,5 @@
-import {
-  Component,
-  Input,
-  effect,
-  inject,
-  Injector,
-  OnInit,
-} from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { PaginationService } from '../../pagination/pagination.service';
 import { type task } from '../taskService/task.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
@@ -27,7 +19,7 @@ import { TaskService } from '../taskService/task.service';
   templateUrl: './task.component.html',
   styleUrl: './task.component.css',
 })
-export class TaskComponent implements OnInit {
+export class TaskComponent {
   @Input() task!: task;
   delete = faTrash;
   edit = faEdit;
@@ -38,27 +30,8 @@ export class TaskComponent implements OnInit {
   updatedTask = '';
   checked = false;
   disabled = true;
-  offset = 0;
-  totalCount = 0;
-  limit = 0;
 
-  private injector = inject(Injector);
-
-  constructor(
-    private paginationService: PaginationService,
-    private taskService: TaskService
-  ) {}
-
-  ngOnInit(): void {
-    effect(
-      () => {
-        this.offset = this.paginationService.offset();
-        this.limit = this.paginationService.limit();
-        this.totalCount = this.paginationService.totalCount();
-      },
-      { injector: this.injector }
-    );
-  }
+  constructor(private taskService: TaskService) {}
 
   deleteTask(): void {
     this.taskService.deleteTask(this.task.id);
