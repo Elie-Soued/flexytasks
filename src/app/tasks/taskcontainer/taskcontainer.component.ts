@@ -1,11 +1,4 @@
-import {
-  Component,
-  effect,
-  inject,
-  Injector,
-  Input,
-  OnInit,
-} from '@angular/core';
+import { Component, effect, inject, Injector, OnInit } from '@angular/core';
 import { TaskComponent } from '../task/task.component';
 import { FormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -36,21 +29,25 @@ export class TaskcontainerComponent implements OnInit {
 
   private injector = inject(Injector);
 
-  offset = 0;
   limit = 0;
   totalCount = 0;
 
   constructor(
     private paginationService: PaginationService,
     private taskService: TaskService
-  ) {}
+  ) {
+    effect(() => {
+      this.taskService.getAllTasks();
+    });
+  }
 
   ngOnInit(): void {
     effect(
       () => {
-        this.offset = this.paginationService.offset();
+        // We need to track limit and totalCount to display or hide the pagination component
         this.limit = this.paginationService.limit();
         this.totalCount = this.paginationService.totalCount();
+        // We need to track tasks since they are used to render individual task
         this.tasks = this.taskService.tasks();
       },
       { injector: this.injector }

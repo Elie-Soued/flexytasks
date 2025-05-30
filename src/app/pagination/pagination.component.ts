@@ -20,6 +20,7 @@ export class PaginationComponent implements OnInit {
   ngOnInit(): void {
     effect(
       () => {
+        // We track offset, totalCount and limit to enable/disable the previous and next buttons
         this.offset = this.paginationService.offset();
         this.totalCount = this.paginationService.totalCount();
         this.limit = this.paginationService.limit();
