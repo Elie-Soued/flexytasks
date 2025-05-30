@@ -1,29 +1,21 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { UserService } from '../../../sharedservices/user.service';
 import { type forgotPasswordResponse } from '../../../sharedservices/user.service';
 
 @Component({
   selector: 'app-forgot-password-modal',
-  imports: [FontAwesomeModule, FormsModule],
+  imports: [FormsModule],
   templateUrl: './forgotpasswordmodal.component.html',
   styleUrl: './forgotpasswordmodal.component.css',
 })
 export class ForgotPasswordModalComponent {
-  @Output() closeDialog = new EventEmitter();
   username = '';
   email = '';
   error: string | undefined;
   success: string | undefined;
-  closeModalIcon = faTimes;
 
   constructor(private userService: UserService) {}
-
-  closeModal() {
-    this.closeDialog.emit();
-  }
 
   resetPassword() {
     this.userService.resetPassword(this.username, this.email).subscribe({

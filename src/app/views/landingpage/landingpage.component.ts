@@ -45,8 +45,4 @@ export class LandingpageComponent {
   showModal(): void {
     this.forgotPassword = true;
   }
-
-  closeModal(): void {
-    this.forgotPassword = false;
-  }
 }

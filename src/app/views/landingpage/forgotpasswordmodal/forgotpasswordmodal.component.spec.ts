@@ -37,14 +37,9 @@ describe('ForgotPasswordModalComponent', () => {
       By.css('#username')
     ).nativeElement;
 
-    const closeModalBtn = fixture.debugElement.query(
-      By.css('#closeModal')
-    ).nativeElement;
-
     expect(resetPasswordForm).toBeTruthy();
     expect(emailInput).toBeTruthy();
     expect(usernameInput).toBeTruthy();
-    expect(closeModalBtn).toBeTruthy();
   });
 
   it('Submit button is disabled and enabled correctly', async () => {
@@ -74,19 +69,6 @@ describe('ForgotPasswordModalComponent', () => {
     fixture.detectChanges();
     await fixture.whenStable();
     expect(submit.disabled).toBeFalsy();
-  });
-
-  it('close modal', async () => {
-    const closeModalSpy = spyOn(component, 'closeModal');
-    const closeModalBtn = fixture.debugElement.query(
-      By.css('#closeModal')
-    ).nativeElement;
-
-    closeModalBtn.click();
-    fixture.detectChanges();
-    await fixture.whenStable();
-
-    expect(closeModalSpy).toHaveBeenCalled();
   });
 
   it('forgotpassword is executed correctly', async () => {
