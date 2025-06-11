@@ -1,13 +1,13 @@
 ### Flexytasks
 
-**Flexytasks** is the frontend of a full-stack Todo application.
+This repository is the frontend of a todolist application.
 
-##### Overview
+#### Overview
 
-This project is built with **Angular** for the frontend and communicates with a **Node.js + Express** backend.  
-It is deployed on **Hetzner** and uses **GitHub Actions** for continuous integration.
+This project is built with `Angular` and communicates with an `Express` backend.  
+It is deployed on `Hetzner` and uses `GitHub Actions` for continuous integration.
 
-##### Run the application
+#### Run the application
 
 To clone and run the frontend:
 
@@ -19,7 +19,6 @@ ng serve
 ```
 
 Open your browser at http://localhost:4200/ to see the app.  
-The application will automatically reload when source files are modified.  
 
 
 
@@ -33,7 +32,7 @@ ts-node src/index.ts
 ```
 
 
-##### Topics covered in this project
+#### Topics covered in this project
 
 - `Angular 19`features such as :
 
