@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { TokenService } from './token.service';
 import { BASE_URL } from '../app.config';
+import { Observable } from 'rxjs';
 
 export type loginResponse = {
   code: number;
@@ -37,7 +38,7 @@ export class UserService {
     password: string,
     email: string,
     fullname: string
-  ) {
+  ): Observable<void> {
     return this.httpClient.post<void>(`${BASE_URL}/users/register`, {
       username,
       password,
@@ -46,14 +47,17 @@ export class UserService {
     });
   }
 
-  resetPassword(username: string, email: string) {
+  resetPassword(
+    username: string,
+    email: string
+  ): Observable<forgotPasswordResponse> {
     return this.httpClient.post<forgotPasswordResponse>(
       `${BASE_URL}/users/forgotpassword`,
       { username, email }
     );
   }
 
-  updatePassword(updatedpassword: string) {
+  updatePassword(updatedpassword: string): Observable<updatePasswordResponse> {
     return this.httpClient.post<updatePasswordResponse>(
       `${BASE_URL}/users/updatepassword`,
 
@@ -68,14 +72,14 @@ export class UserService {
     );
   }
 
-  login(username: string, password: string) {
+  login(username: string, password: string): Observable<loginResponse> {
     return this.httpClient.post<loginResponse>(`${BASE_URL}/users/login`, {
       username,
       password,
     });
   }
 
-  logout() {
+  logout(): void {
     this.tokenService.setToken('');
     this.router.navigate(['/']);
   }
