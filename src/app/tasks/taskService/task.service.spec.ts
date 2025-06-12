@@ -1,14 +1,9 @@
 import { TestBed } from '@angular/core/testing';
-import {
-  HttpClient,
-  HttpParams,
-  provideHttpClient,
-} from '@angular/common/http';
+import { HttpParams, provideHttpClient } from '@angular/common/http';
 import { BASE_URL } from '../../app.config';
 import { PaginationService } from '../../pagination/pagination.service';
 import { TaskService } from './task.service';
 import { TokenService } from '../../sharedservices/token.service';
-import { of } from 'rxjs';
 import {
   HttpTestingController,
   provideHttpClientTesting,
@@ -19,6 +14,49 @@ describe('TaskService', () => {
   let httpClient: HttpTestingController;
   let paginationService: jasmine.SpyObj<PaginationService>;
   let tokenService: jasmine.SpyObj<TokenService>;
+  let httpMock = {
+    meta: {
+      totalCount: 1,
+    },
+    tasks: [
+      {
+        id: 1,
+        content: 'hello',
+        checked: false,
+        userID: 100,
+      },
+    ],
+  };
+
+  let httpEmptyMock = {
+    meta: {
+      totalCount: 0,
+    },
+    tasks: [],
+  };
+
+  let httpMockMany = {
+    meta: {
+      totalCount: 2,
+    },
+    tasks: [
+      {
+        id: 1,
+        content: 'hello',
+        checked: false,
+        userID: 100,
+      },
+      {
+        id: 2,
+        content: 'hello 2',
+        checked: false,
+        userID: 200,
+      },
+    ],
+  };
+
+  let tokenServiceMock = 'myToken';
+  let paginationParamsMock = new HttpParams().set('offset', 0).set('limit', 5);
 
   beforeEach(() => {
     paginationService = jasmine.createSpyObj('PaginationService', [
@@ -43,33 +81,7 @@ describe('TaskService', () => {
   });
 
   it('getAllTasks correctly executed', () => {
-    const tokenServiceMock = 'myToken';
     tokenService.getToken.and.returnValue(tokenServiceMock);
-
-    const paginationParamsMock = new HttpParams()
-      .set('offset', 0)
-      .set('limit', 5);
-
-    const httpMock = {
-      meta: {
-        totalCount: 2,
-      },
-      tasks: [
-        {
-          id: 1,
-          content: 'hello',
-          checked: false,
-          userID: 100,
-        },
-        {
-          id: 2,
-          content: 'hello 2',
-          checked: false,
-          userID: 200,
-        },
-      ],
-    };
-
     paginationService.addPaginationParams.and.returnValue(paginationParamsMock);
 
     service.getAllTasks();
@@ -80,37 +92,13 @@ describe('TaskService', () => {
     expect(req.request.params).toEqual(paginationParamsMock);
     expect(req.request.headers.get('authorization')).toBe('myToken');
 
-    req.flush(httpMock);
+    req.flush(httpMockMany);
 
     expect(paginationService.updateTotalCount).toHaveBeenCalledWith(2);
+    expect(service.tasks()).toEqual(httpMockMany.tasks);
   });
 
   it('AddTasks is correctly executed', () => {
-    let tokenServiceMock = 'myToken';
-    let paginationParamsMock = new HttpParams()
-      .set('offset', 0)
-      .set('limit', 5);
-
-    let httpMock = {
-      meta: {
-        totalCount: 2,
-      },
-      tasks: [
-        {
-          id: 1,
-          content: 'hello',
-          checked: false,
-          userID: 100,
-        },
-        {
-          id: 2,
-          content: 'hello 2',
-          checked: false,
-          userID: 200,
-        },
-      ],
-    };
-
     paginationService.addPaginationParams.and.returnValue(paginationParamsMock);
     tokenService.getToken.and.returnValue(tokenServiceMock);
 
@@ -121,24 +109,13 @@ describe('TaskService', () => {
     expect(req.request.params).toEqual(paginationParamsMock);
     expect(req.request.headers.get('authorization')).toBe('myToken');
 
-    req.flush(httpMock);
+    req.flush(httpMockMany);
 
     expect(paginationService.updateTotalCount).toHaveBeenCalledWith(2);
+    expect(service.tasks()).toEqual(httpMockMany.tasks);
   });
 
   it('deleteAllTasks is correctly executed', () => {
-    let tokenServiceMock = 'myToken';
-    let paginationParamsMock = new HttpParams()
-      .set('offset', 0)
-      .set('limit', 5);
-
-    let httpMock = {
-      meta: {
-        totalCount: 0,
-      },
-      tasks: [],
-    };
-
     paginationService.addPaginationParams.and.returnValue(paginationParamsMock);
     tokenService.getToken.and.returnValue(tokenServiceMock);
 
@@ -149,30 +126,13 @@ describe('TaskService', () => {
     expect(req.request.params).toEqual(paginationParamsMock);
     expect(req.request.headers.get('authorization')).toBe('myToken');
 
-    req.flush(httpMock);
+    req.flush(httpEmptyMock);
 
     expect(paginationService.updateTotalCount).toHaveBeenCalledWith(0);
+    expect(service.tasks()).toEqual(httpEmptyMock.tasks);
   });
 
   it('deleteTask is correctly executed', () => {
-    let tokenServiceMock = 'myToken';
-    let paginationParamsMock = new HttpParams()
-      .set('offset', 0)
-      .set('limit', 5);
-    let httpMock = {
-      meta: {
-        totalCount: 1,
-      },
-      tasks: [
-        {
-          id: 1,
-          content: 'hello',
-          checked: false,
-          userID: 100,
-        },
-      ],
-    };
-
     paginationService.addPaginationParams.and.returnValue(paginationParamsMock);
     tokenService.getToken.and.returnValue(tokenServiceMock);
 
@@ -186,27 +146,10 @@ describe('TaskService', () => {
     req.flush(httpMock);
 
     expect(paginationService.updateTotalCount).toHaveBeenCalledWith(1);
+    expect(service.tasks()).toEqual(httpMock.tasks);
   });
 
   it('editTask is correctly executed', () => {
-    let tokenServiceMock = 'myToken';
-    let paginationParamsMock = new HttpParams()
-      .set('offset', 0)
-      .set('limit', 5);
-    let httpMock = {
-      meta: {
-        totalCount: 1,
-      },
-      tasks: [
-        {
-          id: 1,
-          content: 'hello',
-          checked: false,
-          userID: 100,
-        },
-      ],
-    };
-
     paginationService.addPaginationParams.and.returnValue(paginationParamsMock);
     tokenService.getToken.and.returnValue(tokenServiceMock);
 
@@ -218,27 +161,10 @@ describe('TaskService', () => {
     expect(req.request.headers.get('authorization')).toBe('myToken');
 
     req.flush(httpMock);
+    expect(service.tasks()).toEqual(httpMock.tasks);
   });
 
   it('checkTask is correctly executed', () => {
-    let tokenServiceMock = 'myToken';
-    let paginationParamsMock = new HttpParams()
-      .set('offset', 0)
-      .set('limit', 5);
-    let httpMock = {
-      meta: {
-        totalCount: 1,
-      },
-      tasks: [
-        {
-          id: 1,
-          content: 'hello',
-          checked: false,
-          userID: 100,
-        },
-      ],
-    };
-
     paginationService.addPaginationParams.and.returnValue(paginationParamsMock);
     tokenService.getToken.and.returnValue(tokenServiceMock);
 
@@ -250,10 +176,10 @@ describe('TaskService', () => {
     expect(req.request.body).toEqual({
       checkedTask: true,
     });
-
     expect(req.request.params).toEqual(paginationParamsMock);
     expect(req.request.headers.get('authorization')).toBe('myToken');
 
     req.flush(httpMock);
+    expect(service.tasks()).toEqual(httpMock.tasks);
   });
 });
